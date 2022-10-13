@@ -1,3 +1,4 @@
 git add .
-git commit -m $1
+read message
+git commit -m $message
 git push
