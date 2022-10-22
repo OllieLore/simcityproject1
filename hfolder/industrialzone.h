@@ -18,8 +18,7 @@ class industrialzone {
 	void SetAvailableGoods(int availableGoods);
 	int GetWorkerCount();
 	void SetWorkerCount(int workerCount);
-	
-	
+	int IncreasePopulation(bool power, int workerCount);
 
 };
 
