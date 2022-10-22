@@ -1,7 +1,7 @@
 #ifndef COMMERCIALZONE_H
 #define COMMERCIALZONE_H
 
-class commercialzone {
+class commercialzone : public zonenode {
     private:
     public:
         commercialzone();

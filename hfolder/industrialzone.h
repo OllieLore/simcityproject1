@@ -1,7 +1,7 @@
 #ifndef INDUSTRIALZONE_H
 #define INDUSTRIALZONE_H
 
-class industrialzone {
+class industrialzone : public zonenode {
     private:
     public:
         industrialzone();
