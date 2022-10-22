@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
 
-#include "nodezone.h"
+#include "zonenode.h"
 #include "commercialzone.h"
 #include "industrialzone.h"
 #include "residentialzone.h"
