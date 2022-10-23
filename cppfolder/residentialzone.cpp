@@ -16,7 +16,7 @@ int residentialzone::getPopulationSize(int population)
 
 int residentialzone::IncreasePopulationSize(int population, int Neighbors, bool IsNearPowerline, bool PopulationisGreater)
 {
-    if(IsNearPowerline == True && PopulationisGreater == True)
+    if(IsNearPowerline == true && PopulationisGreater == true)
     {
         population+1;
     }

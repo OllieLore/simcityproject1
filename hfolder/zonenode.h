@@ -26,6 +26,8 @@ public:
     // Constructor
     zonenode(zonenode *n, zonenode *s, zonenode *w, zonenode *e, zonenode *nw, zonenode *ne, zonenode *sw, zonenode *se, char t, int i);
 
+    zonenode();
+
     /*
         Set neighbor function, int l is the number equivalent of neighbor location
         0 - north
@@ -50,7 +52,6 @@ public:
 
     // Set id function
     void setID(int i);
-
     // Get neighbor function
     zonenode *getNeighbor(int l);
 
