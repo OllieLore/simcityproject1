@@ -24,7 +24,7 @@ private:
 
 public:
     // Constructor
-    zonenode(zonenode *n, zonenode *s, zonenode *w, zonenode *e, zonenode *nw, zonenode *ne, zonenode *sw, zonenode *se, char t, int i) {}
+    zonenode(zonenode *n, zonenode *s, zonenode *w, zonenode *e, zonenode *nw, zonenode *ne, zonenode *sw, zonenode *se, char t, int i);
 
     /*
         Set neighbor function, int l is the number equivalent of neighbor location
@@ -37,37 +37,37 @@ public:
         6 - south west
         7 - south east
     */
-    void setNeighbor(int l, zonenode *n) {}
+    void setNeighbor(int l, zonenode *n);
 
     // Set zone type function
-    void setType(char t) {}
+    void setType(char t);
 
     // Set population function
-    void setPopulation(int p) {}
+    void setPopulation(int p);
 
     // Set pollution function
-    void setPollution(int p) {}
+    void setPollution(int p);
 
     // Set id function
-    void setID(int i) {}
+    void setID(int i);
 
     // Get neighbor function
-    zonenode *getNeighbor(int l) {}
+    zonenode *getNeighbor(int l);
 
     // Get zone type function
-    char getType() {}
+    char getType();
 
     // Get population function
-    int getPopulation() {}
+    int getPopulation();
 
     // Get pollution function
-    int getPollution() {}
+    int getPollution();
 
     // Get id function
-    int getID() {}
+    int getID();
 
     // toString function
-    std::string toString() {}
+    std::string toString();
 };
 
 #endif

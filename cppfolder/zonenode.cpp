@@ -1,4 +1,6 @@
-#include <zonenode.h>
+#include <string>
+
+#include "zonenode.h"
 
 // Constructor
 zonenode::zonenode(zonenode *n, zonenode *s, zonenode *w, zonenode *e, zonenode *nw, zonenode *ne, zonenode *sw, zonenode *se, char t, int i)
@@ -110,8 +112,11 @@ zonenode *zonenode::getNeighbor(int l)
     case 7:
         return seast;
     default:
+        return nullptr;
         break;
     }
+
+    return nullptr;
 }
 
 // Get zone type function
