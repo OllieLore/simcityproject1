@@ -1,7 +1,7 @@
 #ifndef RESIDENTIALZONE_H
 #define RESIDENTIALZONE_H
 
-class residentialzone {
+class residentialzone :: public zonenode {
     private:
         int population; // Keeps track of the population in a cell
         int Neighbors; // Keeps track of population size of the cell's neighbors
