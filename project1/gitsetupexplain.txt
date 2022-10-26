@@ -1,0 +1,6 @@
+make changes to files
+git status
+git add <files that changed> 
+git add .
+git commit -m "short description of what changed"
+git push (pushes changes to remote/origin.  which is your repo)
