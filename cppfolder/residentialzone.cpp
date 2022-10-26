@@ -13,6 +13,7 @@ residentialzone::residentialzone()
 int residentialzone::getPopulationSize(int population)
 {
     return population;
+    // WILL NEED TO UTILIZE RECURSION TO FIND OUT IF THE POPULATION ZONE IS NEAR A POWERLINE AND NEAR A NODE WITH A HIGHER POPULATION
 };
 
 int residentialzone::IncreasePopulationSize(int population, int Neighbors, bool IsNearPowerline, bool PopulationisGreater)
