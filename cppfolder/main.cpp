@@ -14,10 +14,7 @@ int main()
 {
     //-------------------------- Global Variables --------------------------
     string valueRead, inputFile; // variable for node character (stored as string to use getline function)
-    vector<zonenode*> listHeads; // stores head of the linked list {setup for Linked List implimentation}
-    zonenode* tempNodePtr = NULL;
     bool headNode = false;
-    int numberOfNodes = 0;
     int intRead;
 
     vector<vector<char>> regionMap;
