@@ -4,7 +4,10 @@
 //Constructor
 residentialzone::residentialzone()
 {
-
+    int population = 0; // Population starts at 0
+    int Neighbors = 0; // Neighbors starts at 0
+    bool IsNearPowerline = false;
+    bool PopulationisGreater = false; // Set to false by default
 };
 
 int residentialzone::getPopulationSize(int population)
