@@ -2,7 +2,6 @@ Members: Olive Davis, Mark Nikirk, William Hua, Elijah Haynes
 
 To Know:
 a) add config file, csv file and zonenode.h, zonenode.cpp, main.cpp to the same directory
-b)
 
 How to Compile:
     1. Open Console
