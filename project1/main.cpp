@@ -12,6 +12,7 @@ using namespace std;
 
 int main(){
     ifstream csvReadIn;  //input file stream
+    ifstream csvRow;
     vector <string> initialZone;
     string line;
     int i;
@@ -34,7 +35,7 @@ int main(){
       return 1;
    }
 
-getline(csvReadIn, row, '\n');
+/*getline(csvReadIn, row, '\n');
 for (int i = 0; i < row.size(); i++){
     if (row[i] == ',') { 
 
@@ -43,24 +44,24 @@ for (int i = 0; i < row.size(); i++){
 }
 
 cout << comma << endl;
-
+*/
   while (!csvReadIn.fail()) {
     getline(csvReadIn, line, ',');
 
     initialZone.push_back(line);
 
-    getline(csvReadIn, row, '\n');
-         rowCount.push_back(row);
-
-     for (int i = 0; i < row.size(); i++){
+    //getline(csvReadIn, row, '\n');
+     //    rowCount.push_back(row);
+    //rows = rowCount.size();
+     /*for (int i = 0; i < row.size(); i++){
     if (row[i] == ',') { 
         
         count++;
-  zoneNode.SetXCoordinate(count);
+  
     }
 
     }
-    
+    */
 
     }
         
@@ -68,10 +69,10 @@ cout << comma << endl;
 
 
 for (i = 0; i < initialZone.size(); ++i) {
-    rows = rowCount.size();
-  x = i%comma;
-  y = comma%i;
-  mapNodes.at(i).SetYCoordinate(i%comma);
+  x = i;
+  y = i;
+  zoneNode.SetYCoordinate(y);
+  zoneNode.SetXCoordinate(x);
  
 
 cout << initialZone.at(i) << endl;
@@ -79,32 +80,32 @@ cout << initialZone.at(i) << endl;
 temp = initialZone.at(i);
 
  if(temp == "-"){
-mapNodes.at(i).setType('-');
+  zoneNode.setType('-');
 }
  
 if(temp == "P"){
-mapNodes.at(i).setType('P');
+ zoneNode.setType('P');
 }
 
 if(temp == "T"){
-mapNodes.at(i).setType('T');
+ zoneNode.setType('T');
 }
 
 if(temp == "I"){
-mapNodes.at(i).setType('I');
+ zoneNode.setType('I');
 }
 
 if(temp == "R"){
-mapNodes.at(i).setType('R');
+ zoneNode.setType('R');
 }
 if(temp == "C"){
-mapNodes.at(i).setType('C');
+ zoneNode.setType('C');
 }
 
 if(temp == "#"){
-mapNodes.at(i).setType('#');
+ zoneNode.setType('#');
 }
-
+mapNodes.push_back(zoneNode);
 }
 
 for(i=0; i<mapNodes.size(); ++i){
@@ -112,10 +113,12 @@ cout<< mapNodes.at(i).GetXCoordinate() << mapNodes.at(i).GetYCoordinate() << end
 cout<< mapNodes.at(i).getType() << endl;
 }
 
-csvReadIn.close();
-initialZone.clear();
-mapNodes.clear();
+
 rowCount.clear();
+mapNodes.clear();
+initialZone.clear();
+
+csvReadIn.close();
 
 return 0;
 
