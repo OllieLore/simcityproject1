@@ -51,14 +51,17 @@ commercialzone::ComercialTimeStep()
             {
                 population = 1;
             }
-            else if (/*&& availableWorker && availableGood*/)
+            else if (NeighborPopulationCheck(1, 1)/*&& availableWorker && availableGood*/)
             {
-
+                population = 1;
             }
             break;
 
         case 1:
-
+            if (NeighborPopulationCheck(1, 2)/*&& availableWorker && availableGood*/)
+            {
+                population = 2;
+            }
             break;
 
         
