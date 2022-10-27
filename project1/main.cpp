@@ -13,6 +13,8 @@ using namespace std;
 int main(){
     ifstream csvReadIn;  //input file stream
     ifstream csvRow;
+    ifstream csvRows;
+    string rowss;
     vector <string> initialZone;
     string line;
     int i;
@@ -64,17 +66,37 @@ cout << comma << endl;
     */
 
     }
-        
+    csvReadIn.close();    
 
+csvRow.open("zone.csv");
+
+    getline(csvRow, row, '\n');
+for (int i = 0; i < row.size(); i++){
+    if (row[i] == ',') { 
+
+        comma++;
+        }
+}
+csvRow.close(); 
+
+csvRows.open("zone.csv");
+
+while (!csvRows.fail()) {
+getline(csvRows, rowss, '\n');
+    rowCount.push_back(rowss);
+    rows = rowCount.size();
+}
+csvRows.close(); 
 
 
 for (i = 0; i < initialZone.size(); ++i) {
-  x = i;
-  y = i;
+  x = i/comma;
+  y = i/rows;
   zoneNode.SetYCoordinate(y);
   zoneNode.SetXCoordinate(x);
  
-
+cout << "X: " << x << endl;
+cout << "Y: " << y << endl;
 cout << initialZone.at(i) << endl;
 
 temp = initialZone.at(i);
@@ -118,7 +140,7 @@ rowCount.clear();
 mapNodes.clear();
 initialZone.clear();
 
-csvReadIn.close();
+
 
 return 0;
 
