@@ -9,5 +9,9 @@ How to Compile:
     2. g++ *.cpp
     3. ./a.out
     4. input config file name
-    5.
-     
+
+How to Run:
+    1. Open Console
+    2. Type "g++ *.cpp" into the terminal window
+    3. Afterwards, type "./A.out" into the terminal window
+    4. Input name of the Config file you wish to use
