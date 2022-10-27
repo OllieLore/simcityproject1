@@ -22,6 +22,11 @@ zonenode::zonenode(zonenode *n, zonenode *s, zonenode *w, zonenode *e, zonenode 
     id = i;
 }
 
+zonenode::zonenode()
+{
+
+}
+
 /*
     Set neighbor function, int l is the number equivalent of neighbor location
     0 - north
@@ -97,26 +102,34 @@ zonenode *zonenode::getNeighbor(int l)
     {
     case 0:
         return north;
+        break;
     case 1:
         return south;
+        break;
     case 2:
         return west;
+        break;
     case 3:
         return east;
+        break;
     case 4:
         return nwest;
+        break;
     case 5:
         return neast;
+        break;
     case 6:
         return swest;
+        break;
     case 7:
         return seast;
+        break;
     default:
-        return nullptr;
+        return NULL;
         break;
     }
+    return NULL;
 
-    return nullptr;
 }
 
 // Get zone type function
