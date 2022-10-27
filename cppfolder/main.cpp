@@ -2,11 +2,7 @@
 #include <fstream>
 #include <string>
 #include <vector>
-#include "zonenode.h" // ***Reminder: change .cpp to .h before uplaod
-//#include "comercialzone.h"
-//#include "residential.h"
-//#include "industrial.h"
-//#include "LinkedList.h"
+#include "zonenode.h" // ***Reminder: change .cpp for VS code and to .h before uplaod
 
 using namespace std;
 
@@ -47,6 +43,7 @@ int main()
 
             while (getline(inputStream, valueRead, ',')) // start reading file until the end
             {
+                
 
                 if (regionMap.empty()) // checks if there is no rows
                 {
@@ -62,15 +59,15 @@ int main()
                             headNode = true; // set marker so that later can be turned into head of new linked list
                             valueRead = valueRead.at(1); // removes the newline characeter
                         }
-                        else
+                        else 
                         {
-                            valueRead = valueRead.at(0); // removes the newline characeter
+                            headNode = true; // set marker so that later can be turned into head of new linked list
+                            valueRead = valueRead.at(valueRead.size() - 1); // removes the newline characeter
                         }
                     }
                 }
 
                 
-
                 if (headNode) // adds new row vector
                 {
                     vector<zonenode> tempZoneVect;
@@ -78,29 +75,30 @@ int main()
                     headNode = false;
                 }
 
-                zonenode tempNode;
-                tempNode.setType(valueRead.at(0));
-                regionMap.at(regionMap.size() - 1).push_back(tempNode); // adds valueRead to its row vector
+                zonenode tempNode; // creats node to put type into
+                tempNode.setType(valueRead.at(0)); // fills node type with valueRead
+                regionMap.at(regionMap.size() - 1).push_back(tempNode); // adds tempNode to its row vector
             }
                 
             for (long unsigned int i = 0; i < regionMap.size(); i++) // outputs regionMap 
             {
                 if (regionMap.at(i).size() != 1 && regionMap.at(i).at(0).getType() != ' ')
-                for (long unsigned int j = 0; j < regionMap.at(i).size(); j++)
                 {
-                    cout << regionMap.at(i).at(j).getType() << ",";
+                    for (long unsigned int j = 0; j < regionMap.at(i).size(); j++)
+                    {
+                        cout << regionMap.at(i).at(j).getType() << " ";
+                    }
+                    cout << endl;
                 }
-                cout << endl;
+                
+                
+                
             }
 
             inputStream.close(); // close file
         }
-        else
-        {
-            cout << "NO" << endl;
-        }
 
-        in_s.close();
+        in_s.close(); // close config file
     }
     
 
