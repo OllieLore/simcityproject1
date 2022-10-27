@@ -14,9 +14,11 @@ int main(){
     ifstream csvReadIn;  //input file stream
     ifstream csvRow;
     ifstream csvRows;
+    ifstream inputFile;
     string rowss;
     vector <string> initialZone;
     string line;
+    string configLine;
     int i;
     zonenode zoneNode;
     vector <zonenode> mapNodes;
@@ -28,9 +30,28 @@ int main(){
     int comma;
     int x;
     int y;
+    int timesteps; //max timesteps
+    int refresh;   //refresh rate
+    string regionFile;
+
+
+
+cout << "Input config file:";
+    cin >> configLine; // Read in the config file's name
+
+ inputFile.open(configLine);
+ if(!inputFile.is_open()) {
+    cout << "Could not open config file." << endl;
+      return 1;
+ }
+
+ inputFile >> regionFile;
+ inputFile >> timesteps;
+ inputFile >> refresh;
+
 
     cout << "Opening file." << endl;
-   csvReadIn.open("zone.csv");
+   csvReadIn.open(regionFile);
    
    if (!csvReadIn.is_open()) {
       cout << "Could not open file." << endl;
@@ -92,12 +113,12 @@ csvRows.close();
 for (i = 0; i < initialZone.size(); ++i) {
   x = i/comma;
   y = i/rows;
-  zoneNode.SetYCoordinate(y);
-  zoneNode.SetXCoordinate(x);
+  //zoneNode.SetYCoordinate(y);
+ // zoneNode.SetXCoordinate(x);
  
-cout << "X: " << x << endl;
-cout << "Y: " << y << endl;
-cout << initialZone.at(i) << endl;
+//cout << "X: " << x << endl;
+//cout << "Y: " << y << endl;
+cout << initialZone.at(i);
 
 temp = initialZone.at(i);
 
@@ -130,11 +151,13 @@ if(temp == "#"){
 mapNodes.push_back(zoneNode);
 }
 
-for(i=0; i<mapNodes.size(); ++i){
-cout<< mapNodes.at(i).GetXCoordinate() << mapNodes.at(i).GetYCoordinate() << endl;
-cout<< mapNodes.at(i).getType() << endl;
+/*for(i=0; i<mapNodes.size(); ++i){
+//cout<< mapNodes.at(i).GetXCoordinate() << mapNodes.at(i).GetYCoordinate() << endl;
+cout<< mapNodes.at(i).getType();
 }
-
+*/
+cout << "Timestamp: " << timesteps << endl;
+cout << "Refresh rate: " << refresh << endl;
 
 rowCount.clear();
 mapNodes.clear();
