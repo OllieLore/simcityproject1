@@ -32,8 +32,8 @@ void SetWorkerCount(int workerCount){
 	
 
 //Grow zone population
-int IncreasePopulation(bool power, int workerCount, int population){ 
-    if(power == true && workerCount >= 2){
+int IncreasePopulation(bool powerOrPopulation, int workerCount, int population){ 
+    if(powerOrPopulation == true && workerCount >= 2){
         population = population + 1;
 
     }

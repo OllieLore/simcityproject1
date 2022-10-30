@@ -5,7 +5,7 @@
 
 class zonenode
 {
-private:
+protected:
     // Zone type
     char type;
 
