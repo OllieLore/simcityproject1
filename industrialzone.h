@@ -17,7 +17,7 @@ class industrialzone : public zonenode  {
 	void SetAvailableGoods(int availableGoods);
 	int GetWorkerCount();
 	void SetWorkerCount(int workerCount);
-	int IncreasePopulation(bool powerOrPopulation, int workerCount);
+	int IncreasePopulation(bool powerOrPopulation, int workerCount, int population);
 
 };
 
