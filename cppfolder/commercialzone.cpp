@@ -46,21 +46,22 @@ commercialzone::ComercialTimeStep()
 {
     switch(population)
     {
-        case 0:
-            if (isPowered /*&& availableWorker && availableGood*/)
-            {
-                population = 1;
-            }
-            else if (/*&& availableWorker && availableGood*/)
-            {
+    case 0:
+        if (isPowered /*&& availableWorker && availableGood*/)
+        {
+            population = 1;
+        }
+        else if (NeighborPopulationCheck(1, 1)/*&& availableWorker && availableGood*/)
+        {
+            population = 1;
+        }
+        break;
 
-            }
-            break;
-
-        case 1:
-
-            break;
-
-        
+    case 1:
+        if (NeighborPopulationCheck(1, 2)/*&& availableWorker && availableGood*/)
+        {
+            population = 2;
+        }
+        break;
     }
 }

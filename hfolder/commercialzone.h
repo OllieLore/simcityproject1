@@ -6,10 +6,11 @@ class commercialzone : public zonenode {
         bool isPowered;
     public:
         commercialzone();
-        GetIsPowered();
-        SetIsPowered(bool powerI);
-        CheckForPower();
-        ComercialTimeStep();
+        bool GetIsPowered();
+        void SetIsPowered(bool powerI);
+        void CheckForPower();
+        bool NeighborPopulationCheck(int popMin, int neighborAmount);
+        void ComercialTimeStep();
 };
 
 #endif
