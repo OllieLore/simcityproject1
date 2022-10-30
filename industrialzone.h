@@ -1,15 +1,14 @@
 #ifndef INDUSTRIALZONE_H
 #define INDUSTRIALZONE_H
 
-class industrialzone {
+class industrialzone : public zonenode  {
     private:
 	int availableGoods;
 	int workerCount;
 	int population;
 	int temp;
-	bool power;
-	int onePopulationCells;
-	int twoPopulationCells;
+	bool powerOrPopulation;
+	
     public:
         industrialzone();
 	int GetPopulation();
@@ -18,7 +17,7 @@ class industrialzone {
 	void SetAvailableGoods(int availableGoods);
 	int GetWorkerCount();
 	void SetWorkerCount(int workerCount);
-	int IncreasePopulation(bool power, int workerCount);
+	int IncreasePopulation(bool powerOrPopulation, int workerCount);
 
 };
 
