@@ -18,7 +18,7 @@ void commercialzone::CheckForPower()
 {
     for (int i = 0; i < 8; i++)
     {
-        if (getNeighbor(i).getType == 'T')
+        if (getNeighbor(i).getType == 'T' /*|| getNeighbor(i).getIsPowered()*/)
         {
             SetIsPowered(true);
         }
