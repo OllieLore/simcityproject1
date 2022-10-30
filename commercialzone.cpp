@@ -14,6 +14,7 @@ void commercialzone::SetIsPowered(bool powerI)
     isPowered = powerI;
 }
 
+// might switch to a zonenode function
 void commercialzone::CheckForPower()
 {
     for (int i = 0; i < 8; i++)
