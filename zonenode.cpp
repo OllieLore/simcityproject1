@@ -1,6 +1,7 @@
 #include <string>
 
 #include "zonenode.h"
+#include <iostream>
 
 // Constructor
 zonenode::zonenode(zonenode *n, zonenode *s, zonenode *w, zonenode *e, zonenode *nw, zonenode *ne, zonenode *sw, zonenode *se, char t, int i)
@@ -20,6 +21,8 @@ zonenode::zonenode(zonenode *n, zonenode *s, zonenode *w, zonenode *e, zonenode 
     pollution = 0;
 
     id = i;
+
+    isPowered = false;
 }
 
 zonenode::zonenode()
@@ -156,8 +159,82 @@ int zonenode::getID()
     return id;
 }
 
+bool zonenode::GetIsPowered()
+{
+    return isPowered;
+}
+
+void zonenode::SetIsPowered(bool powerI)
+{
+    isPowered = powerI;
+}
+
+void zonenode::CheckForPower()
+{
+    for (int i = 0; i < 8; i++)
+    {
+        if (getNeighbor(i) != nullptr)
+        {
+            if (getNeighbor(i)->getType() == 'T' || getNeighbor(i)->getType() == '#')
+            {
+                SetIsPowered(true);
+            }
+        }
+        
+    }
+}
+
 // toString function
 std::string zonenode::toString()
 {
     return this->getID() + "\t" + this->getType();
+}
+
+
+//--------------------Comercial Zone Testing--------------------------
+
+
+bool zonenode::NeighborPopulationCheck(int popMin, int neighborAmount)
+{
+    int qualified = 0;
+    for (int i = 0; i < 8; i++)
+    {
+        if (getNeighbor(i) != nullptr)
+        {
+            if (getNeighbor(i)->getPopulation() >= popMin)
+            {
+                qualified++;
+            }
+        }
+        
+    }
+
+    if (qualified >= neighborAmount)
+        return true;
+    else
+        return false;
+}
+
+void zonenode::ComercialTimeStep()
+{
+    switch (population)
+    {
+    case 0:
+        if (isPowered /*&& availableWorker && availableGood*/)
+        {
+            population = 1;
+        }
+        else if (NeighborPopulationCheck(1, 1)/*&& availableWorker && availableGood*/)
+        {
+            population = 1;
+        }
+        break;
+
+    case 1:
+        if (NeighborPopulationCheck(1, 2)/*&& availableWorker && availableGood*/)
+        {
+            population = 2;
+        }
+        break;
+    }
 }

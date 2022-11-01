@@ -1,37 +1,21 @@
 #include "commercialzone.h"
 #include "zonenode.h"
+#include <iostream>
 
 //Constructor
 commercialzone::commercialzone() {}
-
-bool commercialzone::GetIsPowered()
-{
-    return isPowered;
-}
-
-void commercialzone::SetIsPowered(bool powerI)
-{
-    isPowered = powerI;
-}
-
-// might switch to a zonenode function
-void commercialzone::CheckForPower()
-{
-    for (int i = 0; i < 8; i++)
-    {
-        if (getNeighbor(i).getType == 'T' /*|| getNeighbor(i).getIsPowered()*/)
-        {
-            SetIsPowered(true);
-        }
-    }
-}
 
 bool commercialzone::NeighborPopulationCheck(int popMin, int neighborAmount)
 {
     int qualified = 0;
     for (int i = 0; i < 8; i++)
     {
-        if (getNeighbor(i).getPopulation <= popMin)
+        switch (id)
+        {
+        default:
+            break;
+        }
+        if (getNeighbor(i)->getPopulation() <= popMin)
         {
             qualified++;
         }
@@ -43,7 +27,7 @@ bool commercialzone::NeighborPopulationCheck(int popMin, int neighborAmount)
         return false;
 }
 
-commercialzone::ComercialTimeStep()
+void commercialzone::ComercialTimeStep()
 {
     switch(population)
     {
@@ -66,3 +50,5 @@ commercialzone::ComercialTimeStep()
         break;
     }
 }
+commercialzone.cpp
+Displaying zonenode.h.
