@@ -1,21 +1,3 @@
-
-Conversation opened. 1 unread message.
-
-Skip to content
-Using Gmail with screen readers
-1 of 1,067
-SimCityProj
-Inbox
-
-Marc Nikirk <marc.nikirk@gmail.com>
-Attachments
-9:59 AM (29 minutes ago)
-to me
-
-
-5
- Attachments
-  •  Scanned by Gmail
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -40,7 +22,7 @@ int main()
 
     //-------------------------- Reading in Config file --------------------------
 
-    /*xcout << "Input config file:";
+    /*cout << "Input config file:";
     cin >> inputFile; // Read in the config file's name
 
     in_s.open(inputFile);
@@ -58,7 +40,7 @@ int main()
         */
 
         //-------------------------- Reading in Region file --------------------------
-    inputStream.open("CityCSV.txt"/*inputFile*/);
+    inputStream.open("CityData.txt"/*inputFile*/);
     if (inputStream.is_open()) // saftey check for open file
     {
         while (getline(inputStream, valueRead, ',')) // start reading file until the end
@@ -256,5 +238,3 @@ else {
 
     return 0;
 }
-main.cpp
-Displaying zonenode.h.
