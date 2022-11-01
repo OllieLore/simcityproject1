@@ -1,23 +1,31 @@
 #ifndef INDUSTRIALZONE_H
 #define INDUSTRIALZONE_H
+#include "zonenode.h"
+#include <string>
 
-class industrialzone : public zonenode  {
-    private:
+using namespace std;
+
+class industrialzone : public zonenode {
+    public:
+
 	int availableGoods;
 	int workerCount;
-	int population;
-	int temp;
+	int industrialPopulation;
+	zonenode *temp;
 	bool powerOrPopulation;
 	
-    public:
+  
         industrialzone();
 	int GetPopulation();
-	void SetPopulation(int population);
+	void SetPopulation(int industrialPopulation);
 	int GetAvailableGoods();
 	void SetAvailableGoods(int availableGoods);
 	int GetWorkerCount();
 	void SetWorkerCount(int workerCount);
-	int IncreasePopulation(bool powerOrPopulation, int workerCount, int population);
+	bool CheckPower(bool powerOrPopulation);
+	int CheckWorkerCount(int workerCount);
+	int IncreasePopulation(int industrialPopulation);
+	
 
 };
 

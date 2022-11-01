@@ -1,45 +1,66 @@
 #include "industrialzone.h"
 #include "zonenode.h"
+#include <string>
+
+using namespace std;
 
 //Constructor
 industrialzone::industrialzone() {
-
+industrialPopulation = 0;
+availableGoods = 0;
+workerCount = 0;
+temp* = NULL;
+powerOrPopulation = true;
 }
 
 int industrialzone::GetPopulation(){
-    return population;
+    return industrialPopulation;
 }
 	
-void SetPopulation(int population){
-    this->population = population;
+void industrialzone::SetPopulation(int industrialPopulation){
+    industrialPopulation = industrialPopulation;
 }
 	
-int GetAvailableGoods(){
-        return availableGoods;
+int industrialzone::GetAvailableGoods(){
+        return availableGoods; 
     }
 	
-void SetAvailableGoods(int availableGoods){
-    this->availableGoods;
+void industrialzone::SetAvailableGoods(int availableGoods){
+    this->availableGoods = availableGoods;
 }
 	
-int GetWorkerCount(){
+int industrialzone:: GetWorkerCount(){
     return workerCount;
 }
 	
-void SetWorkerCount(int workerCount){
-    this->workerCount;
+void industrialzone::SetWorkerCount(int workerCount){
+    this->workerCount = workerCount;
 }
 	
 
 //Grow zone population
-int IncreasePopulation(bool powerOrPopulation, int workerCount, int population){ 
-    if(powerOrPopulation == true && workerCount >= 2){
-        population = population + 1;
-
+int industrialzone::IncreasePopulation(int industrialPopulation){ 
+    industrialPopulation = industrialPopulation + 1;
+        return industrialPopulation;
+}
+       
+        
+bool industrialzone::CheckPower(char type){
+    
+    if(type == '#' || type == "T" || type == "P"){
+        return powerOrPopulation = true;
     }
 
-    else {
-        return population;
+    else{
+        return powerOrPopulation = false;
+    }
+    }
+    
+bool industrialzone::CheckNeighborPopulation(int population){
+    if(industrialPopulation == 0){
+
+
     }
 
 }
+     
