@@ -1,9 +1,12 @@
 #include "residentialzone.h"
-#include "zonenode.h"
+
+#include <vector>
+#include <algorithm>
 
 //Constructor
-residentialzone::residentialzone()
+residentialzone::residentialzone() : zonenode::zonenode(nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, 'R', 0)
 {
+    
     population = 0; // Population starts at 0
     Neighbors = 0; // Neighbors starts at 0
     PopulationisGreater = false; // Set to false by default
@@ -14,9 +17,9 @@ int residentialzone::getPopulationSize(int population)
     return population;
 };
 
-int residentialzone::IncreasePopulationSize(int population, int Neighbors)
+void residentialzone::IncreasePopulationSize(int population, int Neighbors)
 {
-    vector<int> tempPop; // Looks at the neighbors of the cell
+    std::vector<int> tempPop; // Looks at the neighbors of the cell
     IsNearPowerline = false; // Set to false by default
 
     for(int x = 0; x < 8; x++) // Initializes and defines its neighbors
@@ -49,7 +52,7 @@ int residentialzone::IncreasePopulationSize(int population, int Neighbors)
         switch (population) // Checks neighboring cells for if the population is greater
         {
         case 0:
-            if(count(tempPop.begin(), tempPop.end(), 1) >= 1)
+            if(std::count(tempPop.begin(), tempPop.end(), 1) >= 1)
             {
                 population++;
             }
@@ -79,4 +82,4 @@ int residentialzone::IncreasePopulationSize(int population, int Neighbors)
             }
             break;
         }
-};
+}

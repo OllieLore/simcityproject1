@@ -4,6 +4,7 @@
 #include <vector>
 
 #include "zonenode.h" // ***Reminder: change .cpp for VS code and to .h before uplaod
+#include "residentialzone.h"
 
 using namespace std;
 
@@ -72,7 +73,34 @@ int main()
                     headNode = false;
                 }
 
-                zonenode *tempNode = new zonenode(nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, valueRead[0], 0); // creates node
+                
+
+                zonenode *tempNode;
+
+                switch(valueRead[0]) {
+                    case '-': //road
+                        tempNode = new zonenode(nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, '-', 0);
+                        break;
+                    case 'T': //powerline
+                        tempNode = new zonenode(nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, 'T', 0);
+                        break;
+                    case '#': //intersection
+                        tempNode = new zonenode(nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, '#', 0);
+                        break;
+                    case 'P': //powerplant
+                        tempNode = new zonenode(nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, 'P', 0);
+                        break;
+                    case 'I': //industrial
+                        break;
+                    case 'R': //residential
+                        tempNode = new residentialzone();
+                        break;
+                    case 'C': //commercial
+                        break;
+                    default:
+                        break;
+                }
+
                 regionMap.at(regionMap.size() - 1).push_back(tempNode); // adds tempNode to its row vector
             }
 
