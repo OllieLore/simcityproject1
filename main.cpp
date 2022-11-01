@@ -1,21 +1,3 @@
-
-Conversation opened. 1 unread message.
-
-Skip to content
-Using Gmail with screen readers
-1 of 1,067
-SimCityProj
-Inbox
-
-Marc Nikirk <marc.nikirk@gmail.com>
-Attachments
-9:59 AM (29 minutes ago)
-to me
-
-
-5
- Attachments
-  •  Scanned by Gmail
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -256,5 +238,3 @@ else {
 
     return 0;
 }
-main.cpp
-Displaying zonenode.h.
