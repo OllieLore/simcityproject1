@@ -50,5 +50,3 @@ void commercialzone::ComercialTimeStep()
         break;
     }
 }
-commercialzone.cpp
-Displaying zonenode.h.
