@@ -3,7 +3,7 @@
 #include <iostream>
 
 //Constructor
-commercialzone::commercialzone() {}
+commercialzone::commercialzone() : zonenode::zonenode(nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, 'C', 0) {}
 
 bool commercialzone::NeighborPopulationCheck(int popMin, int neighborAmount)
 {

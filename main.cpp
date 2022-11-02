@@ -74,43 +74,44 @@ int main()
                 headNode = false;
             }
 
-            zonenode* tempNode = new zonenode(nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, valueRead[0], 0); // creates node
-            regionMap.at(regionMap.size() - 1).push_back(tempNode); // adds tempNode to its row vector
-
-
-            /*
+            zonenode* tempNode;
             switch (valueRead.at(0))
             {
                 case 'R':
-                    // residentialnode* tempNodeR =
+                    tempNode = new zonenode(nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, 'R', 0);
                     break;
 
                 case 'I':
+                    tempNode = new zonenode(nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, 'I', 0);
                     break;
 
-            case 'C':
-                commercialzone * tempNodeC = new commercialzone();
-                tempNodeC->setType('c');
-                regionMap.at(regionMap.size() - 1).push_back(tempNodeC); // adds tempNode to its row vector
+                case 'C':
+                    tempNode = new commercialzone();
                 break;
 
                 case '-':
+                    tempNode = new zonenode(nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, '-', 0);
                     break;
 
                 case 'T':
+                    tempNode = new zonenode(nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, 'T', 0);
                     break;
 
                 case '#':
+                    tempNode = new zonenode(nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, '#', 0);
                     break;
 
                 case 'P':
+                    tempNode = new zonenode(nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, 'P', 0);
                     break;
 
-            default:
-                zonenode* tempNode = new zonenode(nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, valueRead[0], 0); // creates node
-                regionMap.at(regionMap.size() - 1).push_back(tempNode); // adds tempNode to its row vector
-                break;
-            }*/
+                default:
+                    //tempNode = new zonenode(nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, valueRead[0], 0); // creates node
+                    //regionMap.at(regionMap.size() - 1).push_back(tempNode); // adds tempNode to its row vector
+                    break;
+            }
+
+            regionMap.at(regionMap.size() - 1).push_back(tempNode); // adds tempNode to its row vector
         }
 
         // outputs regionMap
@@ -185,19 +186,17 @@ else {
     }
 
     // Setting ID, IsPowered
-    for (long unsigned int i = 0; i < regionMap.size(); i++)
+    for (long unsigned int x = 0; x < regionMap.size(); x++)
     {
-        if (regionMap.at(i).size() != 1 && regionMap.at(i).at(0)->getType() != ' ')
+        if (regionMap.at(x).size() != 1 && regionMap.at(x).at(0)->getType() != ' ')
         {
-            for (long unsigned int j = 0; j < regionMap.at(i).size(); j++)
+            for (long unsigned int y = 0; y < regionMap.at(x).size(); y++)
             {
-                regionMap.at(i).at(j)->setID(i * 100 + j);
-                regionMap.at(i).at(j)->CheckForPower();
+                regionMap.at(x).at(y)->setID(x * 100 + y);
+                regionMap.at(x).at(y)->CheckForPower();
             }
         }
     }
-
-
 
     //--------------------Comercial Zone Testing--------------------------
 
@@ -209,15 +208,16 @@ else {
             if (regionMap.at(i).size() != 1 && regionMap.at(i).at(0)->getType() != ' ')
             {
                 for (long unsigned int j = 0; j < regionMap.at(i).size(); j++)
-                {
+                { 
                     if (regionMap.at(i).at(j)->getType() == 'C')
                     {
                         regionMap.at(i).at(j)->ComercialTimeStep();
                     }
                 }
-                cout << endl;
             }
         }
+
+        cout << endl;
 
         // Outputs region with populations to show changes
         for (long unsigned int i = 0; i < regionMap.size(); i++)
@@ -226,8 +226,10 @@ else {
             {
                 for (long unsigned int j = 0; j < regionMap.at(i).size(); j++)
                 {
-                    cout << regionMap.at(i).at(j)->getType() << " ";
-                    cout << regionMap.at(i).at(j)->getPopulation() << " ";
+                    if (regionMap.at(i).at(j)->getPopulation() == 0)
+                        cout << regionMap.at(i).at(j)->getType() << " ";
+                    else
+                        cout << regionMap.at(i).at(j)->getPopulation() << " ";
                 }
                 cout << endl;
             }
