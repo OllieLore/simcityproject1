@@ -70,7 +70,7 @@ void residentialzone::IncreasePopulationSize(int population, int Neighbors)
             if(count(tempPop.begin(), tempPop.end(), 1) >= 2)
             {
                 population++;
-                workers;
+                workers++;
             }
             break;
         case 2:

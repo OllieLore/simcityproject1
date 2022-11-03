@@ -117,7 +117,7 @@ bool industrialzone::CheckNeighborPopulation(){
 
 void industrialzone::CheckWorkerCount(){
 
-    *tempR = *residentialzone::getWorkers();
+    tempR* = *zonenode::getWorkers();
     if(tempR->getWorkers() >= 2){
         workers = true;
         tempR->setWorkers(tempR->getWorkers()-2);
