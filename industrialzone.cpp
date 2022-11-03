@@ -9,8 +9,10 @@ industrialzone::industrialzone() {
 industrialPopulation = 0;
 availableGoods = 0;
 workerCount = 0;
-temp* = NULL;
+temp = NULL;
 powerOrPopulation = true;
+neighborPopCount1 = 0;
+neighborPopCount2 = 0;
 }
 
 int industrialzone::GetPopulation(){
@@ -45,22 +47,47 @@ int industrialzone::IncreasePopulation(int industrialPopulation){
 }
        
         
-bool industrialzone::CheckPower(char type){
-    
-    if(type == '#' || type == "T" || type == "P"){
-        return powerOrPopulation = true;
+void industrialzone::CheckPower(){
+    for(int i = 0; i < 8; i++){
+
+        *temp = *zonenode::getNeighbor(i);
+
+    if(temp->getType() == '#' || temp->getType() == 'T' || temp->getType() == 'P'){
+         powerOrPopulation = true;
     }
 
     else{
-        return powerOrPopulation = false;
+        powerOrPopulation = false;
     }
     }
-    
-bool industrialzone::CheckNeighborPopulation(int population){
-    if(industrialPopulation == 0){
-
-
-    }
-
 }
-     
+
+bool industrialzone::CheckNeighborPopulation(){
+    for(int i = 0; i < 8; i++){
+
+        *temp = *zonenode::getNeighbor(i);
+            
+    if(temp->getPopulation() >= 1){
+        neighborPopCount1++;
+
+    }
+    if(temp->getPopulation() >= 2){
+        neighborPopCount2++;
+    }
+    }
+
+
+     if(industrialPopulation == 0 && neighborPopCount1 >=1){
+        return powerOrPopulation = true;
+     }
+     if(industrialPopulation == 0 && neighborPopCount1 >=2){
+        return powerOrPopulation = true;
+     }
+     if(industrialPopulation == 0 && neighborPopCount2 >=4){
+        return powerOrPopulation = true;
+     }
+     else{
+        return powerOrPopulation = false;
+     }
+}
+    

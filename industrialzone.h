@@ -13,6 +13,8 @@ class industrialzone : public zonenode {
 	int industrialPopulation;
 	zonenode *temp;
 	bool powerOrPopulation;
+	int neighborPopCount1;
+	int neighborPopCount2;
 	
   
         industrialzone();
@@ -22,10 +24,10 @@ class industrialzone : public zonenode {
 	void SetAvailableGoods(int availableGoods);
 	int GetWorkerCount();
 	void SetWorkerCount(int workerCount);
-	bool CheckPower(bool powerOrPopulation);
+	void CheckPower();
 	int CheckWorkerCount(int workerCount);
 	int IncreasePopulation(int industrialPopulation);
-	
+	bool CheckNeighborPopulation();
 
 };
 
