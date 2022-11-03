@@ -178,6 +178,7 @@ void zonenode::CheckForPower()
             if (getNeighbor(i)->getType() == 'T' || getNeighbor(i)->getType() == '#')
             {
                 SetIsPowered(true);
+                break;
             }
         }
         

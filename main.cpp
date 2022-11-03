@@ -215,7 +215,7 @@ else {
                     {
                         commercialzone* tempnode = (commercialzone*) regionMap.at(i).at(j);
                         
-                        tempnode->ComercialTimeStep();
+                        tempnode->ComercialTimeStep(1, 1);
                     }
                 }
             }

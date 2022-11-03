@@ -12,7 +12,7 @@ class commercialzone : public zonenode {
         bool NeighborPopulationCheck(int popMin, int neighborAmount);
 
         // What to do when a time step is called
-        void ComercialTimeStep();
+        void ComercialTimeStep(int availableWorker, int availableGood);
 };
 
 #endif

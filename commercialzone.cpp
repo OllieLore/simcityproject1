@@ -25,23 +25,23 @@ bool commercialzone::NeighborPopulationCheck(int popMin, int neighborAmount)
         return false;
 }
 
-void commercialzone::ComercialTimeStep()
+void commercialzone::ComercialTimeStep(int availableWorker, int availableGood)
 {
     switch(population)
     {
     case 0:
-        if (isPowered /*&& availableWorker && availableGood*/)
+        if (isPowered && availableWorker >= 1 && availableGood  >= 1)
         {
             population = 1;
         }
-        else if (NeighborPopulationCheck(1, 1)/*&& availableWorker && availableGood*/)
+        else if (NeighborPopulationCheck(1, 1) && availableWorker >= 1 && availableGood  >= 1)
         {
             population = 1;
         }
         break;
 
     case 1:
-        if (NeighborPopulationCheck(1, 2)/*&& availableWorker && availableGood*/)
+        if (NeighborPopulationCheck(1, 2) && availableWorker >= 1 && availableGood  >= 1)
         {
             population = 2;
         }
