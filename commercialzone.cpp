@@ -10,14 +10,12 @@ bool commercialzone::NeighborPopulationCheck(int popMin, int neighborAmount)
     int qualified = 0;
     for (int i = 0; i < 8; i++)
     {
-        switch (id)
+        if (getNeighbor(i) != nullptr)
         {
-        default:
-            break;
-        }
-        if (getNeighbor(i)->getPopulation() <= popMin)
-        {
-            qualified++;
+            if (getNeighbor(i)->getPopulation() >= popMin)
+            {
+                qualified++;
+            }
         }
     }
 

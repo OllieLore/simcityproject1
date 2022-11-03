@@ -81,15 +81,6 @@ public:
 
     // toString function
     std::string toString();
-
-
-    //--------------------Comercial Zone Testing--------------------------
-
-    // Checks neighbor poulation to see if they meet requirements
-    bool NeighborPopulationCheck(int popMin, int neighborAmount);
-
-    // What to do when a time step is called
-    void ComercialTimeStep();
 };
 
 #endif

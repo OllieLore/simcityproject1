@@ -202,16 +202,20 @@ else {
 
     for (int k = 0; k < 5; k++)
     {
+        
         // Tells comercial nodes to run comercial timestep
         for (long unsigned int i = 0; i < regionMap.size(); i++)
         {
             if (regionMap.at(i).size() != 1 && regionMap.at(i).at(0)->getType() != ' ')
             {
+                
                 for (long unsigned int j = 0; j < regionMap.at(i).size(); j++)
                 { 
                     if (regionMap.at(i).at(j)->getType() == 'C')
                     {
-                        regionMap.at(i).at(j)->ComercialTimeStep();
+                        commercialzone* tempnode = (commercialzone*) regionMap.at(i).at(j);
+                        
+                        tempnode->ComercialTimeStep();
                     }
                 }
             }
