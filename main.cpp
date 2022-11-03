@@ -193,7 +193,8 @@ cout <<  endl;
                    temp->CheckPower();
                     temp->CheckNeighborPopulation();
                     temp->CheckWorkerCount();
-                    temp->IncreasePopulation(true,temp->GetPop(), true);
+                    temp->IncreasePopulation(temp->GetPower(),temp->GetPop(), temp->GetWorkers());
+                    temp->IncreaseGoods(temp->GetPower(),temp->GetPop(), temp->GetWorkers());
                 
                 }
             }
