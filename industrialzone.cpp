@@ -1,6 +1,7 @@
 #include "industrialzone.h"
 #include "zonenode.h"
 #include <string>
+#include "residentialzone.h"
 
 using namespace std;
 
@@ -10,9 +11,12 @@ industrialPopulation = 0;
 availableGoods = 0;
 workerCount = 0;
 temp = NULL;
-powerOrPopulation = true;
+power = true;
+pop = true;
+workers = true;
 neighborPopCount1 = 0;
 neighborPopCount2 = 0;
+tempR = NULL;
 }
 
 int industrialzone::GetPopulation(){
@@ -41,11 +45,31 @@ void industrialzone::SetWorkerCount(int workerCount){
 	
 
 //Grow zone population
-int industrialzone::IncreasePopulation(int industrialPopulation){ 
+int industrialzone::IncreasePopulation(bool power, bool pop, bool workers){ 
+    if(power == true && pop == true && workers == true){
+
     industrialPopulation = industrialPopulation + 1;
+    
         return industrialPopulation;
+    }
+    else{
+        return industrialPopulation;
+    } 
+
+  
+
 }
-       
+
+//Increase commercial goods
+int industrialzone::IncreaseGoods(bool power, bool pop, bool workers){
+    if(power == true && pop == true && workers == true){
+    availableGoods = availableGoods +1;
+    return availableGoods;
+    }
+    else{
+        return availableGoods;
+    }
+}
         
 void industrialzone::CheckPower(){
     for(int i = 0; i < 8; i++){
@@ -53,11 +77,11 @@ void industrialzone::CheckPower(){
         *temp = *zonenode::getNeighbor(i);
 
     if(temp->getType() == '#' || temp->getType() == 'T' || temp->getType() == 'P'){
-         powerOrPopulation = true;
+         power= true;
     }
 
     else{
-        powerOrPopulation = false;
+        power = false;
     }
     }
 }
@@ -78,16 +102,28 @@ bool industrialzone::CheckNeighborPopulation(){
 
 
      if(industrialPopulation == 0 && neighborPopCount1 >=1){
-        return powerOrPopulation = true;
+        return pop = true;
      }
      if(industrialPopulation == 0 && neighborPopCount1 >=2){
-        return powerOrPopulation = true;
+        return pop = true;
      }
      if(industrialPopulation == 0 && neighborPopCount2 >=4){
-        return powerOrPopulation = true;
+        return pop = true;
      }
      else{
-        return powerOrPopulation = false;
+        return pop = false;
      }
+}
+
+void industrialzone::CheckWorkerCount(){
+
+    *tempR = *residentialzone::getWorkers();
+    if(tempR->getWorkers() >= 2){
+        workers = true;
+        tempR->setWorkers(tempR->getWorkers()-2);
+        }
+    else{
+        workers = false;
+    }
 }
     

@@ -11,7 +11,7 @@ protected:
 
     // Misc. values
     int population, pollution, id /*id is 00x00y*/;
-
+    int workers;
     // Neighbors
     zonenode *north;
     zonenode *south;
@@ -49,6 +49,12 @@ public:
 
     // Set pollution function
     void setPollution(int p);
+
+    //set available workers
+    virtual void setWorkers(int population);
+
+    //get available workers
+    virtual int getWorkers();
 
     // Set id function
     void setID(int i);

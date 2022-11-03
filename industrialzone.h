@@ -2,6 +2,7 @@
 #define INDUSTRIALZONE_H
 #include "zonenode.h"
 #include <string>
+#include "residentialzone.h"
 
 using namespace std;
 
@@ -12,9 +13,12 @@ class industrialzone : public zonenode {
 	int workerCount;
 	int industrialPopulation;
 	zonenode *temp;
-	bool powerOrPopulation;
+	bool power;
+	bool pop;
+	bool workers;
 	int neighborPopCount1;
 	int neighborPopCount2;
+	residentialzone *tempR;
 	
   
         industrialzone();
@@ -25,9 +29,11 @@ class industrialzone : public zonenode {
 	int GetWorkerCount();
 	void SetWorkerCount(int workerCount);
 	void CheckPower();
-	int CheckWorkerCount(int workerCount);
-	int IncreasePopulation(int industrialPopulation);
+	void CheckWorkerCount();
+	int IncreasePopulation(bool power, bool pop, bool workers);
 	bool CheckNeighborPopulation();
+	int IncreaseGoods(bool power, bool pop, bool workers);
+
 
 };
 

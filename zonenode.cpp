@@ -18,6 +18,7 @@ zonenode::zonenode(zonenode *n, zonenode *s, zonenode *w, zonenode *e, zonenode 
 
     population = 0;
     pollution = 0;
+    workers = 0;
 
     id = i;
 }
@@ -27,6 +28,12 @@ zonenode::zonenode()
 
 }
 
+int zonenode::getWorkers(){
+    return workers;
+}
+void zonenode::setWorkers(int workers){
+    this->workers = workers;
+}
 /*
     Set neighbor function, int l is the number equivalent of neighbor location
     0 - north
