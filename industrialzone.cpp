@@ -5,7 +5,7 @@
 using namespace std;
 
 //Constructor
-industrialzone::industrialzone() {
+industrialzone::industrialzone() : zonenode::zonenode(nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, 'I', 0) {
 industrialPopulation = 0;
 availableGoods = 0;
 workerCount = 0;
