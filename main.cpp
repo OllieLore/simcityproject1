@@ -40,7 +40,7 @@ int main()
         */
 
         //-------------------------- Reading in Region file --------------------------
-    inputStream.open("CityData.txt"/*inputFile*/);
+    inputStream.open("region1.csv"/*inputFile*/);
     if (inputStream.is_open()) // saftey check for open file
     {
         while (getline(inputStream, valueRead, ',')) // start reading file until the end
@@ -48,7 +48,7 @@ int main()
             if (regionMap.empty()) // checks if there is no rows
             {
                 headNode = true; // mark for new row vector
-            }
+            } 
 
             for (int i = 0; i < valueRead.size(); i++) // checking for new lines
             {
@@ -73,7 +73,8 @@ int main()
                 regionMap.push_back(tempZoneVect);
                 headNode = false;
             }
-
+            //cout << valueRead.at(0) << "/"; 
+            
             zonenode* tempNode;
             switch (valueRead.at(0))
             {
@@ -109,6 +110,7 @@ int main()
                 tempNode = new zonenode(nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, valueRead[0], 0); // creates node
                 break;
             }
+            //cout << tempNode->getType() << "/";
 
             regionMap.at(regionMap.size() - 1).push_back(tempNode); // adds tempNode to its row vector
         }
@@ -122,22 +124,21 @@ int main()
     }
 
     in_s.close(); // close config file
-/*}
-else {
-    cout << "Error opening config file" << endl;
-}*/
+    /*
+    }
+    else {
+        cout << "Error opening config file" << endl;
+    }
+    */
 
-// outputs regionMap
+    // outputs regionMap
     for (long unsigned int i = 0; i < regionMap.size(); i++)
     {
-        if (regionMap.at(i).size() != 1 && regionMap.at(i).at(0)->getType() != ' ')
+        for (long unsigned int j = 0; j < regionMap.at(i).size(); j++)
         {
-            for (long unsigned int j = 0; j < regionMap.at(i).size(); j++)
-            {
-                cout << regionMap.at(i).at(j)->getType() << " ";
-            }
-            cout << endl;
+            cout << regionMap.at(i).at(j)->getType() << " ";
         }
+        cout << endl;
     }
 
     //Link all nodes
@@ -184,7 +185,7 @@ else {
                 current->setNeighbor(3, regionMap[x][y + 1]);
         }
     }
-
+    
     // Setting ID, IsPowered
     for (long unsigned int x = 0; x < regionMap.size(); x++)
     {
@@ -199,12 +200,12 @@ else {
     }
 
     //--------------------Comercial Zone Testing--------------------------
-
+    
     for (int k = 0; k < 5; k++)
     {
 
         // Tells comercial nodes to run comercial timestep
-        for (long unsigned int i = 0; i < regionMap.size(); i++)
+        for (long unsigned int i = 0; i < regionMap.size() - 1; i++)
         {
             if (regionMap.at(i).size() != 1 && regionMap.at(i).at(0)->getType() != ' ')
             {
@@ -224,17 +225,13 @@ else {
 
         for (long unsigned int i = 0; i < regionMap.size(); i++)
         {
-            if (regionMap.at(i).size() != 1 && regionMap.at(i).at(0)->getType() != ' ')
+            for (long unsigned int j = 0; j < regionMap.at(i).size(); j++)
             {
-
-                for (long unsigned int j = 0; j < regionMap.at(i).size(); j++)
+                if (regionMap.at(i).at(j)->getType() == 'C')
                 {
-                    if (regionMap.at(i).at(j)->getType() == 'C')
-                    {
-                        commercialzone* tempnode = (commercialzone*)regionMap.at(i).at(j);
+                    commercialzone* tempnode = (commercialzone*)regionMap.at(i).at(j);
 
-                        tempnode->UpdatePop();
-                    }
+                    tempnode->UpdatePop();
                 }
             }
         }
@@ -245,21 +242,16 @@ else {
         // Outputs region with populations to show changes
         for (long unsigned int i = 0; i < regionMap.size(); i++)
         {
-            if (regionMap.at(i).size() != 1 && regionMap.at(i).at(0)->getType() != ' ')
+            for (long unsigned int j = 0; j < regionMap.at(i).size(); j++)
             {
-                for (long unsigned int j = 0; j < regionMap.at(i).size(); j++)
-                {
-                    if (regionMap.at(i).at(j)->getPopulation() == 0)
-                        cout << regionMap.at(i).at(j)->getType() << " ";
-                    else
-                        cout << regionMap.at(i).at(j)->getPopulation() << " ";
-                }
-                cout << endl;
+                if (regionMap.at(i).at(j)->getPopulation() == 0)
+                    cout << regionMap.at(i).at(j)->getType() << " ";
+                else
+                    cout << regionMap.at(i).at(j)->getPopulation() << " ";
             }
+            cout << endl;
         }
     }
-
-
 
     return 0;
 }
