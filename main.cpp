@@ -77,55 +77,43 @@ int main()
             zonenode* tempNode;
             switch (valueRead.at(0))
             {
-                case 'R':
-                    tempNode = new zonenode(nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, 'R', 0);
-                    break;
-
-                case 'I':
-                    tempNode = new zonenode(nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, 'I', 0);
-                    break;
-
-                case 'C':
-                    tempNode = new commercialzone();
+            case 'R':
+                tempNode = new zonenode(nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, 'R', 0);
                 break;
 
-                case '-':
-                    tempNode = new zonenode(nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, '-', 0);
-                    break;
+            case 'I':
+                tempNode = new zonenode(nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, 'I', 0);
+                break;
 
-                case 'T':
-                    tempNode = new zonenode(nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, 'T', 0);
-                    break;
+            case 'C':
+                tempNode = new commercialzone();
+                break;
 
-                case '#':
-                    tempNode = new zonenode(nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, '#', 0);
-                    break;
+            case '-':
+                tempNode = new zonenode(nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, '-', 0);
+                break;
 
-                case 'P':
-                    tempNode = new zonenode(nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, 'P', 0);
-                    break;
+            case 'T':
+                tempNode = new zonenode(nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, 'T', 0);
+                break;
 
-                default:
-                    //tempNode = new zonenode(nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, valueRead[0], 0); // creates node
-                    //regionMap.at(regionMap.size() - 1).push_back(tempNode); // adds tempNode to its row vector
-                    break;
+            case '#':
+                tempNode = new zonenode(nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, '#', 0);
+                break;
+
+            case 'P':
+                tempNode = new zonenode(nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, 'P', 0);
+                break;
+
+            default:
+                tempNode = new zonenode(nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, valueRead[0], 0); // creates node
+                break;
             }
 
             regionMap.at(regionMap.size() - 1).push_back(tempNode); // adds tempNode to its row vector
         }
 
-        // outputs regionMap
-        for (long unsigned int i = 0; i < regionMap.size(); i++)
-        {
-            if (regionMap.at(i).size() != 1 && regionMap.at(i).at(0)->getType() != ' ')
-            {
-                for (long unsigned int j = 0; j < regionMap.at(i).size(); j++)
-                {
-                    cout << regionMap.at(i).at(j)->getType() << " ";
-                }
-                cout << endl;
-            }
-        }
+
 
         inputStream.close(); // close file
     }
@@ -139,8 +127,20 @@ else {
     cout << "Error opening config file" << endl;
 }*/
 
+// outputs regionMap
+    for (long unsigned int i = 0; i < regionMap.size(); i++)
+    {
+        if (regionMap.at(i).size() != 1 && regionMap.at(i).at(0)->getType() != ' ')
+        {
+            for (long unsigned int j = 0; j < regionMap.at(i).size(); j++)
+            {
+                cout << regionMap.at(i).at(j)->getType() << " ";
+            }
+            cout << endl;
+        }
+    }
 
-//Link all nodes
+    //Link all nodes
     for (int x = 0; x < regionMap.size(); x++) {
         for (int y = 0; y < regionMap[x].size(); y++) {
             zonenode* current = regionMap[x][y];
@@ -202,24 +202,43 @@ else {
 
     for (int k = 0; k < 5; k++)
     {
-        
+
         // Tells comercial nodes to run comercial timestep
         for (long unsigned int i = 0; i < regionMap.size(); i++)
         {
             if (regionMap.at(i).size() != 1 && regionMap.at(i).at(0)->getType() != ' ')
             {
-                
+
                 for (long unsigned int j = 0; j < regionMap.at(i).size(); j++)
-                { 
+                {
                     if (regionMap.at(i).at(j)->getType() == 'C')
                     {
-                        commercialzone* tempnode = (commercialzone*) regionMap.at(i).at(j);
-                        
+                        commercialzone* tempnode = (commercialzone*)regionMap.at(i).at(j);
+
                         tempnode->ComercialTimeStep(1, 1);
                     }
                 }
             }
         }
+
+
+        for (long unsigned int i = 0; i < regionMap.size(); i++)
+        {
+            if (regionMap.at(i).size() != 1 && regionMap.at(i).at(0)->getType() != ' ')
+            {
+
+                for (long unsigned int j = 0; j < regionMap.at(i).size(); j++)
+                {
+                    if (regionMap.at(i).at(j)->getType() == 'C')
+                    {
+                        commercialzone* tempnode = (commercialzone*)regionMap.at(i).at(j);
+
+                        tempnode->UpdatePop();
+                    }
+                }
+            }
+        }
+
 
         cout << endl;
 

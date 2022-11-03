@@ -181,7 +181,6 @@ void zonenode::CheckForPower()
                 break;
             }
         }
-        
     }
 }
 
