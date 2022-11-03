@@ -4,8 +4,10 @@
 #include <algorithm>
 
 //Constructor
+int residentialzone::workers = 0;
 residentialzone::residentialzone() : zonenode::zonenode(nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, 'R', 0)
 {
+    //int residentialzone::availableWorkers = 0;
     workers = 0;
     population = 0; // Population starts at 0
     Neighbors = 0; // Neighbors starts at 0
@@ -20,8 +22,8 @@ int residentialzone::getPopulationSize(int population)
 int residentialzone::getWorkers() {
     return workers;
 }
-void zonenode::setWorkers(int workers) {
-    this->workers = workers;
+void residentialzone::setWorkers(int workers) {
+    workers = workers;
 }
 void residentialzone::IncreasePopulationSize(int population, int Neighbors)
 {
@@ -96,3 +98,4 @@ void residentialzone::IncreasePopulationSize(int population, int Neighbors)
             break;
         }
 }
+

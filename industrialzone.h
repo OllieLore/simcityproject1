@@ -9,7 +9,8 @@ using namespace std;
 class industrialzone : public zonenode {
     public:
 
-	int availableGoods;
+	static int availableWorkers;
+	static int availableGoods;
 	int workerCount;
 	int industrialPopulation;
 	zonenode *temp;
@@ -22,7 +23,6 @@ class industrialzone : public zonenode {
 	
   
         industrialzone();
-	int GetPopulation();
 	void SetPopulation(int industrialPopulation);
 	int GetAvailableGoods();
 	void SetAvailableGoods(int availableGoods);
@@ -30,10 +30,12 @@ class industrialzone : public zonenode {
 	void SetWorkerCount(int workerCount);
 	void CheckPower();
 	void CheckWorkerCount();
-	int IncreasePopulation(bool power, bool pop, bool workers);
-	bool CheckNeighborPopulation();
+	void IncreasePopulation(bool power, bool pop, bool workers);
+	void CheckNeighborPopulation();
 	int IncreaseGoods(bool power, bool pop, bool workers);
-
+	bool GetPower();
+	bool GetPop();
+	bool GetWorkers();
 
 };
 

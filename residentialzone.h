@@ -5,7 +5,8 @@
 
 class residentialzone : public zonenode { // Calls from the zonenode from the zonenode.h file
     private:
-        int workers;
+        //static int availableWorkers;
+        static int workers;
         int population; // Keeps track of the population in a cell
         int Neighbors; // Keeps track of population size of the cell's neighbors
         bool IsNearPowerline, PopulationisGreater; // Determines if the conditions are met to increase the population size
@@ -13,8 +14,8 @@ class residentialzone : public zonenode { // Calls from the zonenode from the zo
         residentialzone(); // Class called
         void IncreasePopulationSize(int population, int Neighbors); // Brings in the bools and int to increase the population size
         int getPopulationSize(int population); // Gets the size of the population
-        int getWorkers() override;
-        void setWorkers(int workers) override;
+        static int getWorkers();
+        static void setWorkers(int workers);
         void growWorkerCount();
 };
 

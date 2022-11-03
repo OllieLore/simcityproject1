@@ -28,12 +28,12 @@ zonenode::zonenode()
 
 }
 
-int zonenode::getWorkers(){
+/*int zonenode::getWorkers(){
     return workers;
-}
-void zonenode::setWorkers(int workers){
+}*/
+/*void zonenode::setWorkers(int workers){
     this->workers = workers;
-}
+}*/
 /*
     Set neighbor function, int l is the number equivalent of neighbor location
     0 - north

@@ -5,7 +5,7 @@
 
 #include "zonenode.h" // ***Reminder: change .cpp for VS code and to .h before uplaod
 #include "residentialzone.h"
-
+#include "industrialzone.h"
 using namespace std;
 
 int main()
@@ -80,20 +80,27 @@ int main()
                 switch(valueRead[0]) {
                     case '-': //road
                         tempNode = new zonenode(nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, '-', 0);
+                        cout << tempNode->getType() << " ";
                         break;
                     case 'T': //powerline
                         tempNode = new zonenode(nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, 'T', 0);
+                        cout << tempNode->getType() << " ";
                         break;
                     case '#': //intersection
                         tempNode = new zonenode(nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, '#', 0);
+                        cout << tempNode->getType() << " ";
                         break;
                     case 'P': //powerplant
                         tempNode = new zonenode(nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, 'P', 0);
+                        cout << tempNode->getType() << " ";
                         break;
                     case 'I': //industrial
+                        tempNode = new industrialzone();
+                        cout << tempNode->getType() << " ";
                         break;
                     case 'R': //residential
                         tempNode = new residentialzone();
+                        cout << tempNode->getType() << " ";
                         break;
                     case 'C': //commercial
                         break;
@@ -104,18 +111,7 @@ int main()
                 regionMap.at(regionMap.size() - 1).push_back(tempNode); // adds tempNode to its row vector
             }
 
-            // outputs regionMap
-            for (long unsigned int i = 0; i < regionMap.size(); i++)
-            {
-                if (regionMap.at(i).size() != 1 && regionMap.at(i).at(0)->getType() != ' ')
-                {
-                    for (long unsigned int j = 0; j < regionMap.at(i).size(); j++)
-                    {
-                        cout << regionMap.at(i).at(j)->getType() << " ";
-                    }
-                    cout << endl;
-                }
-            }
+            
 
             inputStream.close(); // close file
         }
@@ -128,10 +124,27 @@ int main()
     else {
         cout << "Error opening config file" << endl;
     }
+// outputs regionMap
+            cout<< regionMap.size() << endl;
+
+            for (int i = 0; i < regionMap.size(); i++)
+            {
+             
+                if (regionMap.at(i).size() != 1 && regionMap.at(i).at(0)->getType() != ' ')
+                {
+                    for (long unsigned int j = 0; j < regionMap.at(i).size(); j++)
+                    {
+                        cout << regionMap.at(i).at(j)->getType() << " ";
+                    }
+                    cout << endl;
+                }
+            }
 
     //Link all nodes
     for(int x = 0; x < regionMap.size(); x++) {
+       
         for(int y = 0; y < regionMap[x].size(); y++) {
+            
             zonenode *current = regionMap[x][y];
 
             //Link north
@@ -169,6 +182,50 @@ int main()
                 current->setNeighbor(3, regionMap[x][y + 1]);
         }
     }
+//update industrialzone
+cout <<  endl;
+    for (int k = 0; k < regionMap.size(); k++){
+    
+        for (int l = 0; l < regionMap.at(k).size(); l++){ 
+                if (regionMap.at(k).at(l)->getType() == 'I')
+                {
+                    industrialzone* temp = (industrialzone*)regionMap.at(k).at(l);
+
+                   temp->CheckPower();
+                    temp->CheckNeighborPopulation();
+                    temp->CheckWorkerCount();
+                    temp->IncreasePopulation(true,temp->GetPop(), true);
+                //temp->GetPower(), temp->GetPop(), temp->GetWorkers
+                }
+            }
+         }
+
+         // outputs regionMap
+
+            for (int i = 0; i < regionMap.size(); i++)
+            {
+            
+                if (regionMap.at(i).size() != 1 && regionMap.at(i).at(0)->getType() != ' ')
+                {
+                    for (long unsigned int j = 0; j < regionMap.at(i).size(); j++)
+                    {
+                        if(regionMap.at(i).at(j)->getType() == 'I'){
+                        if(regionMap.at(i).at(j)->getPopulation() == 0){
+                            cout << regionMap.at(i).at(j)->getType() << " ";
+
+                        }
+                        else{
+                            cout << regionMap.at(i).at(j)->getPopulation() << " ";
+                        }
+
+                        }
+                        else{
+                            cout << regionMap.at(i).at(j)->getType() << " ";
+                        }
+                    }
+                    cout << endl;
+                }
+            }
 
     return 0;
 }
