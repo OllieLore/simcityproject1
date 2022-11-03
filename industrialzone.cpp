@@ -6,20 +6,19 @@
 #include <iostream>
 
 using namespace std;
-int industrialzone::availableGoods = 0;
+int industrialzone::availableGoods = 0; //static variable to keep track of goods across classes
 
 //Constructor
 industrialzone::industrialzone() : zonenode::zonenode(nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, 'I', 0) {
 industrialPopulation = 0;
 availableGoods = 0;
 workerCount = 0;
-temp = nullptr;
-power = true;
-pop = true;
-workers = true;
+temp = nullptr;  
+power = true; //bool for if zone is powered
+pop = true; //bool for adjacent populated zone check
+workers = true; //bool for available workers
 neighborPopCount1 = 0;
 neighborPopCount2 = 0;
-tempR = nullptr;
 }
 
 	
@@ -49,6 +48,7 @@ void industrialzone::SetWorkerCount(int workerCount){
 	bool industrialzone::GetPop(){
         return pop;
     }
+    
 	bool industrialzone::GetWorkers(){
         return workers;
     }	
@@ -77,7 +77,7 @@ int industrialzone::IncreaseGoods(bool power, bool pop, bool workers){
         return availableGoods;
     }
 }
-        
+    //check if zone is powered    
 void industrialzone::CheckPower(){
     for(int i = 0; i < 8; i++){
 
@@ -107,7 +107,7 @@ void industrialzone::CheckPower(){
     
     }
 }
-
+//function to check adjacent zone population criteria for growth
 void industrialzone::CheckNeighborPopulation(){
     pop = false;
 
@@ -137,9 +137,11 @@ void industrialzone::CheckNeighborPopulation(){
     }
 }
 
+
+//function to check available workers
 void industrialzone::CheckWorkerCount(){
 
-    //tempR* = *zonenode::getWorkers();
+    
     if(residentialzone::getWorkers() >= 2){
         workers = true;
         residentialzone::setWorkers(residentialzone::getWorkers()-2);

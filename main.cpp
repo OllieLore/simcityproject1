@@ -125,7 +125,6 @@ int main()
         cout << "Error opening config file" << endl;
     }
 // outputs regionMap
-            cout<< regionMap.size() << endl;
 
             for (int i = 0; i < regionMap.size(); i++)
             {
@@ -182,7 +181,7 @@ int main()
                 current->setNeighbor(3, regionMap[x][y + 1]);
         }
     }
-//update industrialzone
+//update industrialzones
 cout <<  endl;
     for (int k = 0; k < regionMap.size(); k++){
     
@@ -195,7 +194,7 @@ cout <<  endl;
                     temp->CheckNeighborPopulation();
                     temp->CheckWorkerCount();
                     temp->IncreasePopulation(true,temp->GetPop(), true);
-                //temp->GetPower(), temp->GetPop(), temp->GetWorkers
+                
                 }
             }
          }

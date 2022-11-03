@@ -9,8 +9,8 @@ using namespace std;
 class industrialzone : public zonenode {
     public:
 
-	static int availableWorkers;
-	static int availableGoods;
+	static int availableWorkers; //static variable for available workers between classes
+	static int availableGoods; //static variable for available goods between classes
 	int workerCount;
 	int industrialPopulation;
 	zonenode *temp;
@@ -22,17 +22,17 @@ class industrialzone : public zonenode {
 	residentialzone *tempR;
 	
   
-        industrialzone();
+        industrialzone(); //constructor
 	void SetPopulation(int industrialPopulation);
-	int GetAvailableGoods();
-	void SetAvailableGoods(int availableGoods);
-	int GetWorkerCount();
+	int GetAvailableGoods(); //get good #
+	void SetAvailableGoods(int availableGoods); //set good #
+	int GetWorkerCount(); 
 	void SetWorkerCount(int workerCount);
-	void CheckPower();
-	void CheckWorkerCount();
-	void IncreasePopulation(bool power, bool pop, bool workers);
-	void CheckNeighborPopulation();
-	int IncreaseGoods(bool power, bool pop, bool workers);
+	void CheckPower(); //check if cell powered
+	void CheckWorkerCount(); //check if workers available
+	void IncreasePopulation(bool power, bool pop, bool workers); //increase population of zone
+	void CheckNeighborPopulation(); //check population growth criteria
+	int IncreaseGoods(bool power, bool pop, bool workers); //increase goods
 	bool GetPower();
 	bool GetPop();
 	bool GetWorkers();
