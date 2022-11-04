@@ -12,6 +12,9 @@ protected:
     // Misc. values
     int population, pollution, id /*id is 00x00y*/;
 
+    // Stores powere status of node
+    bool isPowered;
+
     // Neighbors
     zonenode *north;
     zonenode *south;
@@ -66,6 +69,15 @@ public:
 
     // Get id function
     int getID();
+
+    // Get isPowered function
+    bool GetIsPowered();
+
+    // Set isPowered function
+    void SetIsPowered(bool powerI);
+
+    // Checks if there is a neighbor that provides power
+    void CheckForPower();
 
     // toString function
     std::string toString();

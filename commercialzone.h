@@ -5,12 +5,17 @@
 
 class commercialzone : public zonenode {
     private:
-        bool isPowered;
+        int futurePop;
     public:
+        // Constructor
         commercialzone();
-        bool GetIsPowered();
-        void SetIsPowered(bool powerI);
-        void CheckForPower();
+
+        //getters and setters
+        int GetFuturePop();
+
+        void SetFuturePop(int futurePopI);
+
+        // Checks neighbor poulation to see if they meet requirements
         bool NeighborPopulationCheck(int popMin, int neighborAmount);
         void ComercialTimeStep();
 

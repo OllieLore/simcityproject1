@@ -142,6 +142,7 @@ int main()
     string valueRead, inputFile; // variable for node character (stored as string to use getline function)
     bool headNode = false;
     int intRead;
+    int availableWorkers = 0, availableGoods = 0;
 
     ifstream inputStream, in_s; // file reader input 
 
@@ -163,43 +164,54 @@ int main()
         in_s >> intRead; // Read in the refresh rate of time steps
         REFRESH_RATE = intRead; //  Store refresh rate of time steps
         cout << "Refresh Rate: " << REFRESH_RATE << endl;
+        */
 
         //-------------------------- Reading in Region file --------------------------
-        inputStream.open(inputFile);
-        if (inputStream.is_open()) // saftey check for open file
+    inputStream.open("region1.csv"/*inputFile*/);
+    if (inputStream.is_open()) // saftey check for open file
+    {
+        while (getline(inputStream, valueRead, ',')) // start reading file until the end
         {
-            while(getline(inputStream, valueRead, ',')) // start reading file until the end
-            {                
-                if (regionMap.empty()) // checks if there is no rows
-                {
-                    headNode = true; // mark for new row vector
-                }
+            if (regionMap.empty()) // checks if there is no rows
+            {
+                headNode = true; // mark for new row vector
+            } 
 
-                for (int i = 0; i < valueRead.size(); i++) // checking for new lines
+            for (int i = 0; i < valueRead.size(); i++) // checking for new lines
+            {
+                if (inputStream.eof()) //if end of file is found dont add this value.
+                    break;
+                    
+                if (valueRead.at(i) == '\n')
                 {
-                    if (valueRead.at(i) == '\n')
+                    if (i == 0)
                     {
-                        if (i == 0)
-                        {
-                            headNode = true; // set marker so that later can be turned into head of new linked list
-                            valueRead = valueRead.at(1); // removes the newline characeter
-                        }
-                        else 
-                        {
-                            headNode = true; // set marker so that later can be turned into head of new linked list
-                            valueRead = valueRead.at(valueRead.size() - 1); // removes the newline characeter
-                        }
+                        headNode = true; // set marker so that later can be turned into head of new linked list
+                        valueRead = valueRead.at(1); // removes the newline characeter
+                    }
+                    else
+                    {
+                        headNode = true; // set marker so that later can be turned into head of new linked list
+                        valueRead = valueRead.at(valueRead.size() - 1); // removes the newline characeter
                     }
                 }
                 
-                if (headNode) // adds new row vector
-                {
-                    vector<zonenode*> tempZoneVect;
-                    regionMap.push_back(tempZoneVect);
-                    headNode = false;
-                }
+            }
 
-                
+            if (headNode) // adds new row vector
+            {
+                vector<zonenode*> tempZoneVect;
+                regionMap.push_back(tempZoneVect);
+                headNode = false;
+            }
+            
+            //sets the correct typer of node to be added
+            zonenode* tempNode;
+            switch (valueRead.at(0))
+            {
+            case 'R':
+                tempNode = new residentialzone();
+                break;
 
                 zonenode *tempNode;
 
@@ -229,8 +241,9 @@ int main()
                         break;
                 }
 
-                regionMap.at(regionMap.size() - 1).push_back(tempNode); // adds tempNode to its row vector
-            }
+            case 'C':
+                tempNode = new commercialzone();
+                break;
 
             inputStream.close(); // close file
         }
@@ -238,50 +251,180 @@ int main()
             cout << "Error opening region map file" << endl;
         }
 
-        in_s.close(); // close config file
+
+
+        inputStream.close(); // close file
+    }
+    else {
+        cout << "Error opening region map file" << endl;
+    }
+
+    in_s.close(); // close config file
+    /*
     }
     else {
         cout << "Error opening config file" << endl;
     }
+    */
+
+    // outputs regionMap
+    for (long unsigned int i = 0; i < regionMap.size(); i++)
+    {
+        for (long unsigned int j = 0; j < regionMap.at(i).size(); j++)
+        {
+            cout << regionMap.at(i).at(j)->getType() << " ";
+        }
+        cout << endl;
+    }
+    cout << endl;
 
     //Link all nodes
-    for(int x = 0; x < regionMap.size(); x++) {
-        for(int y = 0; y < regionMap[x].size(); y++) {
-            zonenode *current = regionMap[x][y];
+    for (int x = 0; x < regionMap.size(); x++) {
+        for (int y = 0; y < regionMap[x].size(); y++) {
+            zonenode* current = regionMap[x][y];
 
             //Link north
-            if(x - 1 >= 0) {
+            if (x - 1 >= 0) {
                 current->setNeighbor(0, regionMap[x - 1][y]);
 
                 //Link north west
-                if(y - 1 >= 0)
+                if (y - 1 >= 0)
                     current->setNeighbor(4, regionMap[x - 1][y - 1]);
 
                 //Link north east
-                if(y + 1 <= regionMap[x].size() - 1)
+                if (y + 1 <= regionMap[x].size() - 1)
                     current->setNeighbor(5, regionMap[x - 1][y + 1]);
             }
 
             //Link south
-            if(x + 1 <= regionMap.size() - 1) {
+            if (x + 1 <= regionMap.size() - 1) {
                 current->setNeighbor(1, regionMap[x + 1][y]);
 
                 //Link south west
-                if(y - 1 >= 0)
+                if (y - 1 >= 0)
                     current->setNeighbor(6, regionMap[x + 1][y - 1]);
 
                 //Link south east
-                if(y + 1 <= regionMap[x].size() - 1)
+                if (y + 1 <= regionMap[x].size() - 1)
+                {
                     current->setNeighbor(7, regionMap[x + 1][y + 1]);
+                }
+
             }
 
             //Link west
-            if(y - 1 >= 0)
+            if (y - 1 >= 0)
                 current->setNeighbor(2, regionMap[x][y - 1]);
 
             //Link east
-            if(y + 1 <= regionMap[x].size() - 1)
+
+            if (y + 1 <= regionMap[x].size() - 1)
                 current->setNeighbor(3, regionMap[x][y + 1]);
+        }
+    }
+    
+    // Setting ID, IsPowered
+    for (long unsigned int x = 0; x < regionMap.size(); x++)
+    {
+        if (regionMap.at(x).size() != 1 && regionMap.at(x).at(0)->getType() != ' ')
+        {
+            for (long unsigned int y = 0; y < regionMap.at(x).size(); y++)
+            {
+                regionMap.at(x).at(y)->setID(x * 100 + y);
+                regionMap.at(x).at(y)->CheckForPower();
+            }
+        }
+    }
+
+    //--------------------Comercial Zone Testing--------------------------
+    
+    int p = 0;
+    
+    for (int k = 0; k < 5; k++)
+    {
+
+        // Tells residential nodes to run residential timestep
+        for (long unsigned int i = 0; i < regionMap.size(); i++)
+        {
+            for (long unsigned int j = 0; j < regionMap.at(i).size(); j++)
+            {
+                if (regionMap.at(i).at(j)->getType() == 'R')
+                {
+                    residentialzone* tempnode = (residentialzone*)regionMap.at(i).at(j);
+                    tempnode->IncreasePopulationSize(/*tempnode->getPopulation(), 0*/);
+                }
+                //cout << endl;
+            }
+        }
+        cout << endl;
+
+        //updates population and worker for residential nodes
+        for (long unsigned int i = 0; i < regionMap.size(); i++)
+        {
+            for (long unsigned int j = 0; j < regionMap.at(i).size(); j++)
+            {
+                if (regionMap.at(i).at(j)->getType() == 'R')
+                {
+                    residentialzone* tempnode = (residentialzone*)regionMap.at(i).at(j);
+
+                    tempnode->UpdatePopAndWorkers();
+                }
+            }
+        }
+
+        //sets global varaible available workers equal to residential workes
+        residentialzone* resTempNode = new residentialzone();
+        availableWorkers = resTempNode->getWorkers();
+
+        // Tells comercial nodes to run comercial timestep
+        for (long unsigned int i = 0; i < regionMap.size() - 1; i++)
+        {
+            if (regionMap.at(i).size() != 1 && regionMap.at(i).at(0)->getType() != ' ')
+            {
+
+                for (long unsigned int j = 0; j < regionMap.at(i).size(); j++)
+                {
+                    if (regionMap.at(i).at(j)->getType() == 'C')
+                    {
+                        commercialzone* tempnode = (commercialzone*)regionMap.at(i).at(j);
+
+                        tempnode->ComercialTimeStep(availableWorkers, 1);
+                    }
+                }
+            }
+        }
+
+        //sets global varaible available workers equal to residential workes (commercial removes workers so it needs to be updated)
+        resTempNode->setWorkers(availableWorkers);
+
+
+        //updates population and worker for residential nodes
+        for (long unsigned int i = 0; i < regionMap.size(); i++)
+        {
+            for (long unsigned int j = 0; j < regionMap.at(i).size(); j++)
+            {
+                if (regionMap.at(i).at(j)->getType() == 'C')
+                {
+                    commercialzone* tempnode = (commercialzone*)regionMap.at(i).at(j);
+
+                    tempnode->UpdatePop();
+                }
+            }
+        }
+        cout << endl;
+
+
+        // Outputs region with populations to show changes
+        for (long unsigned int i = 0; i < regionMap.size(); i++)
+        {
+            for (long unsigned int j = 0; j < regionMap.at(i).size(); j++)
+            {
+                if (regionMap.at(i).at(j)->getPopulation() == 0)
+                    cout << regionMap.at(i).at(j)->getType() << " ";
+                else
+                    cout << regionMap.at(i).at(j)->getPopulation() << " ";
+            }
+            cout << endl;
         }
     }
 

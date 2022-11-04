@@ -2,6 +2,7 @@
 #include "residentialzone.h"
 #include "industrialzone.h"
 #include "zonenode.h"
+#include <iostream>
 
 #include <vector>
 #include <algorithm>
@@ -65,4 +66,10 @@ void commercialzone::increasePopulation() {
                     break;
         }
     }
+}
+
+//updates population
+void commercialzone::UpdatePop()
+{
+    population = GetFuturePop();
 }
