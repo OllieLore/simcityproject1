@@ -32,7 +32,6 @@ bool commercialzone::NeighborPopulationCheck(int popMin, int neighborAmount)
             }
         }
     }
-
     if (qualified >= neighborAmount)
         return true;
     else
