@@ -9,7 +9,7 @@ class residentialzone : public zonenode { // Calls from the zonenode from the zo
 
         //int population; // Keeps track of the population in a cell
                             //REDUNDANT DUE TO INHERITANCE
-        int Neighbors; // Keeps track of population size of the cell's neighbors
+        //int Neighbors; // Keeps track of population size of the cell's neighbors
                             //REDUNDANT DUE TO INHERITANCE
 
         bool IsNearPowerline, PopulationisGreater; // Determines if the conditions are met to increase the population size
@@ -19,11 +19,13 @@ class residentialzone : public zonenode { // Calls from the zonenode from the zo
         void IncreasePopulationSize(int population, int Neighbors); // Brings in the bools and int to increase the population size
 
         //int getPopulationSize(int population); // Gets the size of the population
+                                                //REDUNDANT DUE TO INHERITANCE
 
         static int getWorkers();
         static void setWorkers(int workers);
 
         //void growWorkerCount();
+        //REDUNDANT DUE TO INHERITANCE
 
         void SetFuturePop(int futurePopI);
         void UpdatePopAndWorkers();
