@@ -8,14 +8,96 @@
 
 using namespace std;
 
+//-------------------------- Global Variables --------------------------
+vector<vector<zonenode*>> regionMap;
+int population = 0, pollution = 0;
+
+void analyze(int a, int A, int b, int B)
+{
+    if (a <= regionMap[0].size() && a >= 0 && A <= regionMap.size() && A >= 0 && b <= regionMap[0].size() && b >= 0 && B <= regionMap.size() && B >= 0)
+    {
+        // Output population state
+        cout << "Population state:" << endl;
+        for (int x = A; x < B; x++)
+        {
+            for (int y = a; y < b; y++)
+            {
+                if (regionMap[x][y]->getPopulation() == 0)
+                    cout << regionMap[x][y]->getType() << " ";
+                else
+                    cout << regionMap[x][y]->getPopulation() << " ";
+                population += regionMap[x][y]->getPopulation();
+            }
+            cout << endl;
+        }
+
+        // Output pollution state
+        cout << "Pollution state:" << endl;
+        for (int x = A; x < B; x++)
+        {
+            for (int y = a; y < b; y++)
+            {
+                cout << regionMap[x][y]->getPollution() << " ";
+                pollution += regionMap[x][y]->getPollution();
+            }
+            cout << endl;
+        }
+
+        cout << "Total population is: " << population << endl;
+        population = 0;
+        cout << "Total pollution is: " << pollution << endl
+             << endl;
+        pollution = 0;
+    }
+}
+
+void customanalyze() {
+    char choice;
+            cout << "Would you like to analyze a region [y/n]?" << endl;
+            do {
+                cin >> choice;
+                if(choice == 'y')
+                {
+                    int choicex, choicey, choicex2, choicey2;
+                    do {
+                        //Input region to analyze
+                        cout << "Enter top left x coordinate (0 indexed)" << endl;
+                        cin >> choicex;
+                        cout << "Enter top left y coordinate (0 indexed)" << endl;
+                        cin >> choicey;
+                        cout << "Enter bottom right x coordinate (0 indexed)" << endl;
+                        cin >> choicex2;
+                        cout << "Enter bottom right y coordinate (0 indexed)" << endl;
+                        cin >> choicey2;
+
+                        if(choicex <= values[0].size() && choicex >= 0 && choicey <= values.size() && choicey >= 0 && choicex2 <= values[0].size() && choicex2 >= 0 && choicey2 <= values.size() && choicey2 >= 0) {
+                            //Do analyze
+                            analyze(choicex, choicey, choicex2, choicey2);
+                            break;
+                        }
+                        else {
+                            cout << "Did not enter valid coordinates. Try again." << endl;
+                        }
+                    }
+                    while(!(choicex <= values[0].size() && choicex >= 0 && choicey <= values.size() && choicey >= 0 && choicex2 <= values[0].size() && choicex2 >= 0 && choicey2 <= values.size() && choicey2 >= 0));
+                    break;
+                }
+                else if(choice == 'n') {
+                    break;
+                }
+                else {
+                    cout << "Did not enter a valid choice. Try again." << endl;
+                }
+            }
+            while(choice != 'y' && choice != 'n');
+}
+
 int main()
 {
-    //-------------------------- Global Variables --------------------------
+    //-------------------------- Variables --------------------------
     string valueRead, inputFile; // variable for node character (stored as string to use getline function)
     bool headNode = false;
     int intRead;
-
-    vector<vector<zonenode*>> regionMap;
 
     ifstream inputStream, in_s; // file reader input 
 
