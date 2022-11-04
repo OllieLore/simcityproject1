@@ -1,6 +1,7 @@
 #include <string>
 
 #include "zonenode.h"
+#include <iostream>
 
 // Constructor
 zonenode::zonenode(zonenode *n, zonenode *s, zonenode *w, zonenode *e, zonenode *nw, zonenode *ne, zonenode *sw, zonenode *se, char t, int i)
@@ -20,6 +21,8 @@ zonenode::zonenode(zonenode *n, zonenode *s, zonenode *w, zonenode *e, zonenode 
     pollution = 0;
 
     id = i;
+
+    isPowered = false;
 }
 
 zonenode::zonenode()
@@ -154,6 +157,34 @@ int zonenode::getPollution()
 int zonenode::getID()
 {
     return id;
+}
+
+// Get isPoered function
+bool zonenode::GetIsPowered()
+{
+    return isPowered;
+}
+
+// Get isPowered function
+void zonenode::SetIsPowered(bool powerI)
+{
+    isPowered = powerI;
+}
+
+// checks to see if neihbor is giving power to node
+void zonenode::CheckForPower()
+{
+    for (int i = 0; i < 8; i++)
+    {
+        if (getNeighbor(i) != nullptr)
+        {
+            if (getNeighbor(i)->getType() == 'T' || getNeighbor(i)->getType() == '#')
+            {
+                SetIsPowered(true);
+                break;
+            }
+        }
+    }
 }
 
 // toString function

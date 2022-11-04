@@ -1,22 +1,27 @@
 #ifndef COMMERCIALZONE_H
 #define COMMERCIALZONE_H
 
+#include "zonenode.h"
+
 class commercialzone : public zonenode {
     private:
-        bool futurePop;
+        int futurePop;
     public:
-        //Class Constructor
+        // Constructor
         commercialzone();
-        //Getter and Setter
-        bool GetFuturePop();
+
+        //getters and setters
+        int GetFuturePop();
 
         void SetFuturePop(int futurePopI);
-        //Checks for neighbor population if it meets requirements
+
+        // Checks neighbor poulation to see if they meet requirements
         bool NeighborPopulationCheck(int popMin, int neighborAmount);
 
         // What to do when a time step is called
         void ComercialTimeStep(int &availableWorker, int availableGood);
-        //Updates the population count
+
+        //updates population with futurePop
         void UpdatePop();
 };
 

@@ -6,29 +6,20 @@
 class residentialzone : public zonenode { // Calls from the zonenode from the zonenode.h file
     private:
         static int workers; // Keeps track of the worker amount
-
         //int population; // Keeps track of the population in a cell
-                            //REDUNDANT DUE TO INHERITANCE
         //int Neighbors; // Keeps track of population size of the cell's neighbors
-                            //REDUNDANT DUE TO INHERITANCE
-
-        bool IsNearPowerline, PopulationisGreater; // Determines if the conditions are met to increase the population size
-        int futurePop;
+        bool IsNearPowerline; //PopulationisGreater; // Determines if the conditions are met to increase the population size
+        int futurePop; // used to increase population step by step
     public:
         residentialzone(); // Class called
-        void IncreasePopulationSize(int population, int Neighbors); // Brings in the bools and int to increase the population size
-
+        void IncreasePopulationSize(/*int population, int Neighbors*/); // Brings in the bools and int to increase the population size
         //int getPopulationSize(int population); // Gets the size of the population
-                                                //REDUNDANT DUE TO INHERITANCE
-
-        static int getWorkers();
-        static void setWorkers(int workers);
-
+        static int getWorkers(); //getter
+        static void setWorkers(int workersI); //setter
         //void growWorkerCount();
-        //REDUNDANT DUE TO INHERITANCE
-
-        void SetFuturePop(int futurePopI);
-        void UpdatePopAndWorkers();
+        int GetFuturePop(); //getter
+        void SetFuturePop(int futurePopI); //setter
+        void UpdatePopAndWorkers(); //updates population with futurePop and workers accordingly
 };
 
 #endif
