@@ -113,6 +113,6 @@ void residentialzone::SetFuturePop(int futurePopI)
 
 void residentialzone::UpdatePopAndWorkers()
 {
-    workers+= futurePop - population;
-    population = futurePop;
+    workers+= futurePop - population; // adds the new workers
+    population = futurePop; // updeates population
 }

@@ -159,16 +159,19 @@ int zonenode::getID()
     return id;
 }
 
+// Get isPoered function
 bool zonenode::GetIsPowered()
 {
     return isPowered;
 }
 
+// Get isPowered function
 void zonenode::SetIsPowered(bool powerI)
 {
     isPowered = powerI;
 }
 
+// checks to see if neihbor is giving power to node
 void zonenode::CheckForPower()
 {
     for (int i = 0; i < 8; i++)

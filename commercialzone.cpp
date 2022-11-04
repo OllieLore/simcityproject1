@@ -18,6 +18,7 @@ void commercialzone::SetFuturePop(int futurePopI)
     futurePop = futurePopI;
 }
 
+//checks if enough neighbors have the required population
 bool commercialzone::NeighborPopulationCheck(int popMin, int neighborAmount)
 {
     int qualified = 0;
@@ -38,11 +39,12 @@ bool commercialzone::NeighborPopulationCheck(int popMin, int neighborAmount)
         return false;
 }
 
+//main function for commercial timestep.
 void commercialzone::ComercialTimeStep(int &availableWorker, int availableGood)
 {
     switch(population)
     {
-    case 0:
+    case 0: //when pop is 0
         if (isPowered && availableWorker >= 1 && availableGood  >= 1)
         {
             futurePop = 1;
@@ -58,7 +60,7 @@ void commercialzone::ComercialTimeStep(int &availableWorker, int availableGood)
         }
         break;
 
-    case 1:
+    case 1: //when pop is 1
         if (NeighborPopulationCheck(1, 2) && availableWorker >= 1 && availableGood  >= 1)
         {
             futurePop = 2;
@@ -69,6 +71,7 @@ void commercialzone::ComercialTimeStep(int &availableWorker, int availableGood)
     }
 }
 
+//updates population
 void commercialzone::UpdatePop()
 {
     population = GetFuturePop();

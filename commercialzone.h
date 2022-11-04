@@ -10,6 +10,7 @@ class commercialzone : public zonenode {
         // Constructor
         commercialzone();
 
+        //getters and setters
         int GetFuturePop();
 
         void SetFuturePop(int futurePopI);
@@ -20,6 +21,7 @@ class commercialzone : public zonenode {
         // What to do when a time step is called
         void ComercialTimeStep(int &availableWorker, int availableGood);
 
+        //updates population with futurePop
         void UpdatePop();
 };
 

@@ -54,7 +54,7 @@ int main()
 
             for (int i = 0; i < valueRead.size(); i++) // checking for new lines
             {
-                if (inputStream.eof())
+                if (inputStream.eof()) //if end of file is found dont add this value.
                     break;
                     
                 if (valueRead.at(i) == '\n')
@@ -80,6 +80,7 @@ int main()
                 headNode = false;
             }
             
+            //sets the correct typer of node to be added
             zonenode* tempNode;
             switch (valueRead.at(0))
             {
@@ -211,7 +212,7 @@ int main()
     for (int k = 0; k < 5; k++)
     {
 
-        // Tells residential nodes to run comercial timestep
+        // Tells residential nodes to run residential timestep
         for (long unsigned int i = 0; i < regionMap.size(); i++)
         {
             for (long unsigned int j = 0; j < regionMap.at(i).size(); j++)
@@ -226,6 +227,7 @@ int main()
         }
         cout << endl;
 
+        //updates population and worker for residential nodes
         for (long unsigned int i = 0; i < regionMap.size(); i++)
         {
             for (long unsigned int j = 0; j < regionMap.at(i).size(); j++)
@@ -239,6 +241,7 @@ int main()
             }
         }
 
+        //sets global varaible available workers equal to residential workes
         residentialzone* resTempNode = new residentialzone();
         availableWorkers = resTempNode->getWorkers();
 
@@ -260,8 +263,11 @@ int main()
             }
         }
 
+        //sets global varaible available workers equal to residential workes (commercial removes workers so it needs to be updated)
         resTempNode->setWorkers(availableWorkers);
 
+
+        //updates population and worker for residential nodes
         for (long unsigned int i = 0; i < regionMap.size(); i++)
         {
             for (long unsigned int j = 0; j < regionMap.at(i).size(); j++)
@@ -274,9 +280,8 @@ int main()
                 }
             }
         }
-
-
         cout << endl;
+
 
         // Outputs region with populations to show changes
         for (long unsigned int i = 0; i < regionMap.size(); i++)
