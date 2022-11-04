@@ -1,6 +1,8 @@
 #ifndef COMMERCIALZONE_H
 #define COMMERCIALZONE_H
 
+#include "zonenode.h"
+
 class commercialzone : public zonenode {
     private:
         bool isPowered;
@@ -11,6 +13,8 @@ class commercialzone : public zonenode {
         void CheckForPower();
         bool NeighborPopulationCheck(int popMin, int neighborAmount);
         void ComercialTimeStep();
+
+        void increasePopulation();
 };
 
 #endif

@@ -3,15 +3,20 @@
 
 #include "zonenode.h"
 
-class residentialzone : public zonenode { // Calls from the zonenode from the zonenode.h file
+class residentialzone : public zonenode {
     private:
-        int population; // Keeps track of the population in a cell
-        int Neighbors; // Keeps track of population size of the cell's neighbors
-        bool IsNearPowerline, PopulationisGreater; // Determines if the conditions are met to increase the population size
+        static int availableWorkers;
     public:
-        residentialzone(); // Class called
-        void IncreasePopulationSize(int population, int Neighbors); // Brings in the bools and int to increase the population size
-        int getPopulationSize(int population); // Gets the size of the population
+        //Constructor
+        residentialzone();
+
+        //Mutator
+        void increasePopulation();
+
+        static void decreaseAvailableWorkers(int n);
+
+        //Accessor
+        static int getAvailableWorkers();
 };
 
 #endif

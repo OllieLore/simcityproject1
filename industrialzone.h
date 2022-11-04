@@ -1,14 +1,18 @@
 #ifndef INDUSTRIALZONE_H
 #define INDUSTRIALZONE_H
+
 #include "zonenode.h"
-#include <string>
 
 using namespace std;
 
 class industrialzone : public zonenode {
+	private:
+		//Stores all avaiable goods, used by commercial class
+		static int availableGoods;
     public:
 
-	int availableGoods;
+
+	//int availableGoods;
 	int workerCount;
 	int industrialPopulation;
 	zonenode *temp;
@@ -17,7 +21,7 @@ class industrialzone : public zonenode {
 	int neighborPopCount2;
 	
   
-        industrialzone();
+    industrialzone();
 	int GetPopulation();
 	void SetPopulation(int industrialPopulation);
 	int GetAvailableGoods();
@@ -28,6 +32,10 @@ class industrialzone : public zonenode {
 	int CheckWorkerCount(int workerCount);
 	int IncreasePopulation(int industrialPopulation);
 	bool CheckNeighborPopulation();
+
+	void increasePopulation(); //Increase population of cell
+	static void decreaseAvailableGoods(int n); //Decrease available goods when used by commercial class
+ 	static int getAvailableGoods(); //Accessor
 
 };
 

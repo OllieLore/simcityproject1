@@ -1,68 +1,68 @@
 #include "commercialzone.h"
+#include "residentialzone.h"
+#include "industrialzone.h"
 #include "zonenode.h"
 
-//Constructor
-commercialzone::commercialzone() {}
+#include <vector>
+#include <algorithm>
 
-bool commercialzone::GetIsPowered()
-{
-    return isPowered;
-}
+using namespace std;
 
-void commercialzone::SetIsPowered(bool powerI)
-{
-    isPowered = powerI;
-}
+commercialzone::commercialzone() : zonenode::zonenode(nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, 'C', 0) {}
 
-// might switch to a zonenode function
-void commercialzone::CheckForPower()
-{
-    for (int i = 0; i < 8; i++)
-    {
-        if (getNeighbor(i).getType == 'T' /*|| getNeighbor(i).getIsPowered()*/)
-        {
-            SetIsPowered(true);
-        }
+void commercialzone::increasePopulation() {
+    vector<int> tempPop;
+    bool isPowered = false;
+
+    //Gets information on neighbors' population and whether current residential zone is powered
+    for(int x = 0; x < 8; x++) {
+        zonenode *temp = getNeighbor(x);
+
+        if(temp != nullptr)
+            switch(temp->getType()) {
+                case 'T':
+                    isPowered = true;
+                    break;
+                case '#':
+                    isPowered = true;
+                    break;
+                case 'I':
+                    tempPop.push_back(temp->getPopulation());
+                    break;
+                case 'C':
+                    tempPop.push_back(temp->getPopulation());
+                    break;
+                case 'R':
+                    tempPop.push_back(temp->getPopulation());
+                    break;
+                default:
+                    break;
+            }
     }
-}
 
-bool commercialzone::NeighborPopulationCheck(int popMin, int neighborAmount)
-{
-    int qualified = 0;
-    for (int i = 0; i < 8; i++)
-    {
-        if (getNeighbor(i).getPopulation <= popMin)
-        {
-            qualified++;
+    if(residentialzone::getAvailableWorkers() >= 1 && industrialzone::getAvailableGoods() >= 1) {
+        switch(this->getPopulation()) {
+            case 0:
+                if(count(tempPop.begin(), tempPop.end(), 1) >= 1) {
+                    this->setPopulation(this->getPopulation() + 1);
+                    residentialzone::decreaseAvailableWorkers(1);
+                    industrialzone::decreaseAvailableGoods(1);
+                }
+                else if(isPowered) {
+                    this->setPopulation(this->getPopulation() + 1);
+                    residentialzone::decreaseAvailableWorkers(1);
+                    industrialzone::decreaseAvailableGoods(1);
+                }
+                break;
+            case 1:
+                if(count(tempPop.begin(), tempPop.end(), 1) >= 2) {
+                    this->setPopulation(this->getPopulation() + 1);
+                    residentialzone::decreaseAvailableWorkers(1);
+                    industrialzone::decreaseAvailableGoods(1);
+                }
+                break;
+            default:
+                    break;
         }
-    }
-
-    if (qualified >= neighborAmount)
-        return true;
-    else
-        return false;
-}
-
-commercialzone::ComercialTimeStep()
-{
-    switch(population)
-    {
-    case 0:
-        if (isPowered /*&& availableWorker && availableGood*/)
-        {
-            population = 1;
-        }
-        else if (NeighborPopulationCheck(1, 1)/*&& availableWorker && availableGood*/)
-        {
-            population = 1;
-        }
-        break;
-
-    case 1:
-        if (NeighborPopulationCheck(1, 2)/*&& availableWorker && availableGood*/)
-        {
-            population = 2;
-        }
-        break;
     }
 }
