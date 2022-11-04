@@ -3,8 +3,9 @@
 #include <string>
 #include <vector>
 
-#include "zonenode.h" // ***Reminder: change .cpp for VS code and to .h before uplaod
-#include "commercialzone.h"
+#include "zonenode.cpp" // ***Reminder: change .cpp for VS code and to .h before uplaod
+#include "commercialzone.cpp"
+#include "residentialzone.cpp"
 
 using namespace std;
 
@@ -14,6 +15,7 @@ int main()
     string valueRead, inputFile; // variable for node character (stored as string to use getline function)
     bool headNode = false;
     int intRead;
+    int availableWorkers = 0, availableGoods = 0;
 
     vector<vector<zonenode*>> regionMap;
 
@@ -52,6 +54,9 @@ int main()
 
             for (int i = 0; i < valueRead.size(); i++) // checking for new lines
             {
+                if (inputStream.eof())
+                    break;
+                    
                 if (valueRead.at(i) == '\n')
                 {
                     if (i == 0)
@@ -65,6 +70,7 @@ int main()
                         valueRead = valueRead.at(valueRead.size() - 1); // removes the newline characeter
                     }
                 }
+                
             }
 
             if (headNode) // adds new row vector
@@ -73,13 +79,12 @@ int main()
                 regionMap.push_back(tempZoneVect);
                 headNode = false;
             }
-            //cout << valueRead.at(0) << "/"; 
             
             zonenode* tempNode;
             switch (valueRead.at(0))
             {
             case 'R':
-                tempNode = new zonenode(nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, 'R', 0);
+                tempNode = new residentialzone();
                 break;
 
             case 'I':
@@ -110,7 +115,6 @@ int main()
                 tempNode = new zonenode(nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, valueRead[0], 0); // creates node
                 break;
             }
-            //cout << tempNode->getType() << "/";
 
             regionMap.at(regionMap.size() - 1).push_back(tempNode); // adds tempNode to its row vector
         }
@@ -140,6 +144,7 @@ int main()
         }
         cout << endl;
     }
+    cout << endl;
 
     //Link all nodes
     for (int x = 0; x < regionMap.size(); x++) {
@@ -201,8 +206,41 @@ int main()
 
     //--------------------Comercial Zone Testing--------------------------
     
+    int p = 0;
+    
     for (int k = 0; k < 5; k++)
     {
+
+        // Tells residential nodes to run comercial timestep
+        for (long unsigned int i = 0; i < regionMap.size(); i++)
+        {
+            for (long unsigned int j = 0; j < regionMap.at(i).size(); j++)
+            {
+                if (regionMap.at(i).at(j)->getType() == 'R')
+                {
+                    residentialzone* tempnode = (residentialzone*)regionMap.at(i).at(j);
+                    tempnode->IncreasePopulationSize(/*tempnode->getPopulation(), 0*/);
+                }
+                //cout << endl;
+            }
+        }
+        cout << endl;
+
+        for (long unsigned int i = 0; i < regionMap.size(); i++)
+        {
+            for (long unsigned int j = 0; j < regionMap.at(i).size(); j++)
+            {
+                if (regionMap.at(i).at(j)->getType() == 'R')
+                {
+                    residentialzone* tempnode = (residentialzone*)regionMap.at(i).at(j);
+
+                    tempnode->UpdatePopAndWorkers();
+                }
+            }
+        }
+
+        residentialzone* resTempNode = new residentialzone();
+        availableWorkers = resTempNode->getWorkers();
 
         // Tells comercial nodes to run comercial timestep
         for (long unsigned int i = 0; i < regionMap.size() - 1; i++)
@@ -216,12 +254,13 @@ int main()
                     {
                         commercialzone* tempnode = (commercialzone*)regionMap.at(i).at(j);
 
-                        tempnode->ComercialTimeStep(1, 1);
+                        tempnode->ComercialTimeStep(availableWorkers, 1);
                     }
                 }
             }
         }
 
+        resTempNode->setWorkers(availableWorkers);
 
         for (long unsigned int i = 0; i < regionMap.size(); i++)
         {
