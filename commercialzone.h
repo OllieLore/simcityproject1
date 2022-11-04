@@ -3,14 +3,21 @@
 
 class commercialzone : public zonenode {
     private:
-        bool isPowered;
+        bool futurePop;
     public:
+        //Class Constructor
         commercialzone();
-        bool GetIsPowered();
-        void SetIsPowered(bool powerI);
-        void CheckForPower();
+        //Getter and Setter
+        bool GetFuturePop();
+
+        void SetFuturePop(int futurePopI);
+        //Checks for neighbor population if it meets requirements
         bool NeighborPopulationCheck(int popMin, int neighborAmount);
-        void ComercialTimeStep();
+
+        // What to do when a time step is called
+        void ComercialTimeStep(int &availableWorker, int availableGood);
+        //Updates the population count
+        void UpdatePop();
 };
 
 #endif
