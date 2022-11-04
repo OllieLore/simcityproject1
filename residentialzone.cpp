@@ -1,51 +1,30 @@
 #include "residentialzone.h"
-#include <iostream>
+#include "zonenode.h"
 
 #include <vector>
 #include <algorithm>
 
-//Constructor
-int residentialzone::workers = 0;
-residentialzone::residentialzone() : zonenode::zonenode(nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, 'R', 0)
-{
-    //workers = 0; // Worker amount starts at 0
-    //population = 0; // Population starts at 0
-    //Neighbors = 0; // Neighbors starts at 0
-    //PopulationisGreater = false; // Set to false by default
-    futurePop = 0;
-};
+using namespace std;
 
-/*int residentialzone::getPopulationSize(int population)
-{
-    return population;
-};*/
+int residentialzone::availableWorkers = 0;
 
-int residentialzone::getWorkers() {
-    return workers;
-}
+residentialzone::residentialzone() : zonenode::zonenode(nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, 'R', 0) {}
 
-void residentialzone::setWorkers(int workersI) {
-    workers = workersI;
-}
+void residentialzone::increasePopulation() {
+    vector<int> tempPop;
+    bool isPowered = false;
 
-void residentialzone::IncreasePopulationSize(/*int population, int Neighbors*/)
-{
-    std::vector<int> tempPop; // Looks at the neighbors of the cell
-    IsNearPowerline = false; // Set to false by default
+    //Gets information on neighbors' population and whether current residential zone is powered
+    for(int x = 0; x < 8; x++) {
+        zonenode *temp = getNeighbor(x);
 
-    for(int x = 0; x < 8; x++) // Initializes and defines its neighbors
-    {
-        if (getNeighbor(x) != nullptr)
-        {
-            zonenode *temp = getNeighbor(x);
-        
-            switch (temp->getType())
-            {
+        if(temp != nullptr)
+            switch(temp->getType()) {
                 case 'T':
-                    IsNearPowerline = true;
+                    isPowered = true;
                     break;
                 case '#':
-                    IsNearPowerline = true;
+                    isPowered = true;
                     break;
                 case 'I':
                     tempPop.push_back(temp->getPopulation());
@@ -56,63 +35,56 @@ void residentialzone::IncreasePopulationSize(/*int population, int Neighbors*/)
                 case 'R':
                     tempPop.push_back(temp->getPopulation());
                     break;
+                default:
+                    break;
             }
-        }
     }
-    if (IsNearPowerline && population == 0) // If the cell is confirmed to be near a powerline
-    {
-        futurePop++; // Increases population by one
-    }
-    else
-    {
-        switch (population) // Checks neighboring cells for if the population is greater
-        {
+
+    //Do all the incrementing
+    switch(this->getPopulation()) {
         case 0:
-            if(std::count(tempPop.begin(), tempPop.end(), 1) >= 1)
-            {
-                futurePop++;
+            if(count(tempPop.begin(), tempPop.end(), 1) >= 1) {
+                this->setPopulation(this->getPopulation() + 1);
+                availableWorkers++;
+            }
+            else if(isPowered) {
+                this->setPopulation(this->getPopulation() + 1);
+                availableWorkers++;
             }
             break;
         case 1:
-            if(count(tempPop.begin(), tempPop.end(), 1) >= 2)
-            {
-                futurePop++;
+            if(count(tempPop.begin(), tempPop.end(), 1) >= 2) {
+                this->setPopulation(this->getPopulation() + 1);
+                availableWorkers++;
             }
             break;
         case 2:
-            if(count(tempPop.begin(), tempPop.end(), 2) >= 4)
-            {
-                futurePop++;
+            if(count(tempPop.begin(), tempPop.end(), 2) >= 4) {
+                this->setPopulation(this->getPopulation() + 1);
+                availableWorkers++;
             }
             break;
         case 3:
-            if(count(tempPop.begin(), tempPop.end(), 3) >= 6)
-            {
-                futurePop++;
+            if(count(tempPop.begin(), tempPop.end(), 3) >= 6) {
+                this->setPopulation(this->getPopulation() + 1);
+                availableWorkers++;
             }
             break;
         case 4:
-            if(count(tempPop.begin(), tempPop.end(), 4) >= 8)
-            {
-                futurePop++;
+            if(count(tempPop.begin(), tempPop.end(), 4) >= 8) {
+                this->setPopulation(this->getPopulation() + 1);
+                availableWorkers++;
             }
             break;
-        }
+        default:
+                break;
     }
 }
 
-int residentialzone::GetFuturePop()
-{
-    return futurePop;
+void residentialzone::decreaseAvailableWorkers(int n) {
+    availableWorkers -= n;
 }
 
-void residentialzone::SetFuturePop(int futurePopI)
-{
-    futurePop = futurePopI;
-}
-
-void residentialzone::UpdatePopAndWorkers()
-{
-    workers+= futurePop - population; // adds the new workers
-    population = futurePop; // updeates population
+int residentialzone::getAvailableWorkers() {
+    return availableWorkers;
 }
