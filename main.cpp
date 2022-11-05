@@ -66,7 +66,7 @@ void customanalyze()
         cin >> choice;
         if (choice == 'y')
         {
-            int choicex, choicey, choicex2, choicey2;
+            int choicex, choicey, height, length;
             do
             {
                 // Input region to analyze
@@ -74,22 +74,22 @@ void customanalyze()
                 cin >> choicex;
                 cout << "Enter top left y coordinate (0 indexed)" << endl;
                 cin >> choicey;
-                cout << "Enter bottom right x coordinate (0 indexed)" << endl;
-                cin >> choicex2;
-                cout << "Enter bottom right y coordinate (0 indexed)" << endl;
-                cin >> choicey2;
+                cout << "Enter height of region you want to analyze" << endl;
+                cin >> height;
+                cout << "Enter length of region you want to analyze" << endl;
+                cin >> length;
 
-                if (choicex <= regionMap[0].size() && choicex >= 0 && choicey <= regionMap.size() && choicey >= 0 && choicex2 <= regionMap[0].size() && choicex2 >= 0 && choicey2 <= regionMap.size() && choicey2 >= 0)
+                if (choicex >= 0 && choicex + length <= regionMap[0].size() && choicey >= 0 && choicey + height <= regionMap.size())
                 {
                     // Do analyze
-                    analyze(choicex, choicey, choicex2, choicey2);
+                    analyze(choicex, choicey, choicex + length, choicey + height);
                     break;
                 }
                 else
                 {
                     cout << "Did not enter valid coordinates. Try again." << endl;
                 }
-            } while (!(choicex <= regionMap[0].size() && choicex >= 0 && choicey <= regionMap.size() && choicey >= 0 && choicex2 <= regionMap[0].size() && choicex2 >= 0 && choicey2 <= regionMap.size() && choicey2 >= 0));
+            } while (!(choicex >= 0 && choicex + length <= regionMap[0].size() && choicey >= 0 && choicey + height <= regionMap.size()));
             break;
         }
         else if (choice == 'n')
@@ -155,6 +155,7 @@ int main()
     filein.open(filename);
     if (filein.is_open())
     {
+        cout << "Type config file name: " << endl;
         filein >> csvfilename;
         filein >> MAX_TIME_STEPS;
         filein >> REFRESH_RATE;
@@ -270,9 +271,13 @@ int main()
         }
     }
     // do simulation
+
+    cout << "----------Step " << 0 << "----------" << endl;
+    analyze(0, 0, regionMap[0].size(), regionMap.size());
+
     for (int a = 0; a < MAX_TIME_STEPS; a++)
     {
-        cout << "----------Step " << a << "----------" << endl;
+        cout << "----------Step " << a + 1 << "----------" << endl;
 
         // Calculate new commercial population
         for (int x = 0; x < regionMap.size(); x++)
@@ -324,7 +329,7 @@ int main()
                 }
             }
         }
-
+        
         if (a % REFRESH_RATE == 0)
         {
             // Output entire city
