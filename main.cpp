@@ -168,6 +168,47 @@ int main()
         inputStream.open(inputFile);
         if (inputStream.is_open()) // saftey check for open file
         {
+            if (regionMap.empty()) // checks if there is no rows
+            {
+                headNode = true; // mark for new row vector
+            } 
+
+            for (int i = 0; i < valueRead.size(); i++) // checking for new lines
+            {
+                if (inputStream.eof()) //if end of file is found dont add this value.
+                    break;
+                    
+                if (valueRead.at(i) == '\n')
+                {
+                    if (i == 0)
+                    {
+                        headNode = true; // set marker so that later can be turned into head of new linked list
+                        valueRead = valueRead.at(1); // removes the newline characeter
+                    }
+                    else
+                    {
+                        headNode = true; // set marker so that later can be turned into head of new linked list
+                        valueRead = valueRead.at(valueRead.size() - 1); // removes the newline characeter
+                    }
+                }
+                
+            }
+
+            if (headNode) // adds new row vector
+            {
+                vector<zonenode*> tempZoneVect;
+                regionMap.push_back(tempZoneVect);
+                headNode = false;
+            }
+            
+            //sets the correct typer of node to be added
+            zonenode* tempNode;
+            switch (valueRead.at(0))
+            {
+            case 'R':
+                tempNode = new residentialzone();
+                break;
+
             while(getline(inputStream, valueRead, ',')) // start reading file until the end
             {                
                 if (regionMap.empty()) // checks if there is no rows
@@ -229,13 +270,15 @@ int main()
                         break;
                 }
 
-                regionMap.at(regionMap.size() - 1).push_back(tempNode); // adds tempNode to its row vector
-            }
+            case 'C':
+                tempNode = new commercialzone();
+                break;
 
             inputStream.close(); // close file
         }
         else {
             cout << "Error opening region map file" << endl;
+>>>>>>>>> Temporary merge branch 2
         }
 
         in_s.close(); // close config file
