@@ -276,16 +276,11 @@ int main()
 
             inputStream.close(); // close file
         }
-        else {
-            cout << "Error opening region map file" << endl;
->>>>>>>>> Temporary merge branch 2
-        }
+
 
         in_s.close(); // close config file
     }
-    else {
-        cout << "Error opening config file" << endl;
-    }
+
 
     //Link all nodes
     for(int x = 0; x < regionMap.size(); x++) {
