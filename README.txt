@@ -6,5 +6,3 @@ Make sure the config and region files are in the same folder as the project! We 
 To compile and run:
 1. g++ *.cpp
 2. ./a.out
-
-**Note: the program will not immediately prompt for a input file, so you will see nothing upon executing. Simply type the config fileto get the simulation started.
