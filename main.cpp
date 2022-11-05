@@ -1,18 +1,18 @@
 #include <iostream>
 #include <fstream>
-#include <string>
+#include <sstream>
 #include <vector>
+#include <string>
 
 #include "zonenode.h"
 #include "residentialzone.h"
 #include "commercialzone.h"
 #include "industrialzone.h"
 
-
 using namespace std;
 
 //-------------------------- Global Variables --------------------------
-vector<vector<zonenode*>> regionMap;
+vector<vector<zonenode *>> regionMap;
 int population = 0, pollution = 0;
 int MAX_TIME_STEPS, REFRESH_RATE;
 
@@ -55,48 +55,53 @@ void analyze(int a, int A, int b, int B)
     }
 }
 
-void customanalyze() {
+void customanalyze()
+{
     char choice;
-            cout << "Would you like to analyze a region [y/n]?" << endl;
-            do {
-                cin >> choice;
-                if(choice == 'y')
-                {
-                    int choicex, choicey, choicex2, choicey2;
-                    do {
-                        //Input region to analyze
-                        cout << "Enter top left x coordinate (0 indexed)" << endl;
-                        cin >> choicex;
-                        cout << "Enter top left y coordinate (0 indexed)" << endl;
-                        cin >> choicey;
-                        cout << "Enter bottom right x coordinate (0 indexed)" << endl;
-                        cin >> choicex2;
-                        cout << "Enter bottom right y coordinate (0 indexed)" << endl;
-                        cin >> choicey2;
+    cout << "Would you like to analyze a region [y/n]?" << endl;
+    do
+    {
+        cin >> choice;
+        if (choice == 'y')
+        {
+            int choicex, choicey, choicex2, choicey2;
+            do
+            {
+                // Input region to analyze
+                cout << "Enter top left x coordinate (0 indexed)" << endl;
+                cin >> choicex;
+                cout << "Enter top left y coordinate (0 indexed)" << endl;
+                cin >> choicey;
+                cout << "Enter bottom right x coordinate (0 indexed)" << endl;
+                cin >> choicex2;
+                cout << "Enter bottom right y coordinate (0 indexed)" << endl;
+                cin >> choicey2;
 
-                        if(choicex <= regionMap[0].size() && choicex >= 0 && choicey <= regionMap.size() && choicey >= 0 && choicex2 <= regionMap[0].size() && choicex2 >= 0 && choicey2 <= regionMap.size() && choicey2 >= 0) {
-                            //Do analyze
-                            analyze(choicex, choicey, choicex2, choicey2);
-                            break;
-                        }
-                        else {
-                            cout << "Did not enter valid coordinates. Try again." << endl;
-                        }
-                    }
-                    while(!(choicex <= regionMap[0].size() && choicex >= 0 && choicey <= regionMap.size() && choicey >= 0 && choicex2 <= regionMap[0].size() && choicex2 >= 0 && choicey2 <= regionMap.size() && choicey2 >= 0));
+                if (choicex <= regionMap[0].size() && choicex >= 0 && choicey <= regionMap.size() && choicey >= 0 && choicex2 <= regionMap[0].size() && choicex2 >= 0 && choicey2 <= regionMap.size() && choicey2 >= 0)
+                {
+                    // Do analyze
+                    analyze(choicex, choicey, choicex2, choicey2);
                     break;
                 }
-                else if(choice == 'n') {
-                    break;
+                else
+                {
+                    cout << "Did not enter valid coordinates. Try again." << endl;
                 }
-                else {
-                    cout << "Did not enter a valid choice. Try again." << endl;
-                }
-            }
-            while(choice != 'y' && choice != 'n');
+            } while (!(choicex <= regionMap[0].size() && choicex >= 0 && choicey <= regionMap.size() && choicey >= 0 && choicex2 <= regionMap[0].size() && choicex2 >= 0 && choicey2 <= regionMap.size() && choicey2 >= 0));
+            break;
+        }
+        else if (choice == 'n')
+        {
+            break;
+        }
+        else
+        {
+            cout << "Did not enter a valid choice. Try again." << endl;
+        }
+    } while (choice != 'y' && choice != 'n');
 }
 
-//Function to spread pollution
+// Function to spread pollution
 void spreadpollution(int p, int x, int y)
 {
     int centerx = x;
@@ -138,192 +143,131 @@ void spreadpollution(int p, int x, int y)
 
 int main()
 {
-    //-------------------------- Variables --------------------------
-    string valueRead, inputFile; // variable for node character (stored as string to use getline function)
-    bool headNode = false;
-    int intRead;
+    // File name input
+    string filename;
+    string csvfilename;
+    ifstream filein;
+    cin >> filename;
 
-    ifstream inputStream, in_s; // file reader input 
-
-
-    //-------------------------- Reading in Config file --------------------------
-    
-    cout << "Input config file: ";
-    cin >> inputFile; // Read in the config file's name
-
-    in_s.open(inputFile);
-    if (in_s.is_open())
+    // Open config file to store region csv, max time steps, and refresh rate
+    filein.open(filename);
+    if (filein.is_open())
     {
-        in_s >> inputFile; // Read in the region map file's name
+        filein >> csvfilename;
+        filein >> MAX_TIME_STEPS;
+        filein >> REFRESH_RATE;
 
-        in_s >> intRead; // Read in the max time steps
-        MAX_TIME_STEPS = intRead; // Store max time steps
-        cout << "Max Time Steps: " << MAX_TIME_STEPS << endl;
-
-        in_s >> intRead; // Read in the refresh rate of time steps
-        REFRESH_RATE = intRead; //  Store refresh rate of time steps
-        cout << "Refresh Rate: " << REFRESH_RATE << endl;
-
-        //-------------------------- Reading in Region file --------------------------
-        inputStream.open(inputFile);
-        if (inputStream.is_open()) // saftey check for open file
-        {
-            if (regionMap.empty()) // checks if there is no rows
-            {
-                headNode = true; // mark for new row vector
-            } 
-
-            for (int i = 0; i < valueRead.size(); i++) // checking for new lines
-            {
-                if (inputStream.eof()) //if end of file is found dont add this value.
-                    break;
-                    
-                if (valueRead.at(i) == '\n')
-                {
-                    if (i == 0)
-                    {
-                        headNode = true; // set marker so that later can be turned into head of new linked list
-                        valueRead = valueRead.at(1); // removes the newline characeter
-                    }
-                    else
-                    {
-                        headNode = true; // set marker so that later can be turned into head of new linked list
-                        valueRead = valueRead.at(valueRead.size() - 1); // removes the newline characeter
-                    }
-                }
-                
-            }
-
-            if (headNode) // adds new row vector
-            {
-                vector<zonenode*> tempZoneVect;
-                regionMap.push_back(tempZoneVect);
-                headNode = false;
-            }
-            
-            //sets the correct typer of node to be added
-            zonenode* tempNode;
-            switch (valueRead.at(0))
-            {
-            case 'R':
-                tempNode = new residentialzone();
-                break;
-
-            while(getline(inputStream, valueRead, ',')) // start reading file until the end
-            {                
-                if (regionMap.empty()) // checks if there is no rows
-                {
-                    headNode = true; // mark for new row vector
-                }
-
-                for (int i = 0; i < valueRead.size(); i++) // checking for new lines
-                {
-                    if (valueRead.at(i) == '\n')
-                    {
-                        if (i == 0)
-                        {
-                            headNode = true; // set marker so that later can be turned into head of new linked list
-                            valueRead = valueRead.at(1); // removes the newline characeter
-                        }
-                        else 
-                        {
-                            headNode = true; // set marker so that later can be turned into head of new linked list
-                            valueRead = valueRead.at(valueRead.size() - 1); // removes the newline characeter
-                        }
-                    }
-                }
-                
-                if (headNode) // adds new row vector
-                {
-                    vector<zonenode*> tempZoneVect;
-                    regionMap.push_back(tempZoneVect);
-                    headNode = false;
-                }
-
-                
-
-                zonenode *tempNode;
-
-                switch(valueRead[0]) {
-                    case '-': //road
-                        tempNode = new zonenode(nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, '-', 0);
-                        break;
-                    case 'T': //powerline
-                        tempNode = new zonenode(nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, 'T', 0);
-                        break;
-                    case '#': //intersection
-                        tempNode = new zonenode(nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, '#', 0);
-                        break;
-                    case 'P': //powerplant
-                        tempNode = new zonenode(nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, 'P', 0);
-                        break;
-                    case 'I': //industrial
-                        tempNode = new industrialzone();
-                        break;
-                    case 'R': //residential
-                        tempNode = new residentialzone();
-                        break;
-                    case 'C': //commercial
-                        tempNode = new commercialzone();
-                        break;
-                    default:
-                        break;
-                }
-
-            case 'C':
-                tempNode = new commercialzone();
-                break;
-
-            inputStream.close(); // close file
-        }
-
-
-        in_s.close(); // close config file
+        cout << "MAX TIME STEPS: " << MAX_TIME_STEPS << endl;
+        cout << "REFRESH RATE: " << REFRESH_RATE << endl;
     }
+    else
+    {
+        cout << "Error opening config file" << endl;
+    }
+    filein.close();
 
+    vector<zonenode *> row; // Row of grid
+    string line, value;     // Input helper variables
 
-    //Link all nodes
-    for(int x = 0; x < regionMap.size(); x++) {
-        for(int y = 0; y < regionMap[x].size(); y++) {
+    // Initial store into vectors
+    fstream file(csvfilename, ios::in);
+    if (file.is_open())
+    {
+        while (getline(file, line))
+        {
+            row.clear();
+
+            stringstream str(line);
+
+            while (getline(str, value, ','))
+            {
+                zonenode *toadd;
+
+                // Determine what type of zone object to create
+                switch (value[0])
+                {
+                case '-': // road
+                    toadd = new zonenode(nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, '-', 0);
+                    break;
+                case 'T': // powerline
+                    toadd = new zonenode(nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, 'T', 0);
+                    break;
+                case '#': // intersection
+                    toadd = new zonenode(nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, '#', 0);
+                    break;
+                case 'P': // powerplant
+                    toadd = new zonenode(nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, 'P', 0);
+                    break;
+                case 'I': // industrial
+                    toadd = new industrialzone();
+                    break;
+                case 'R': // residential
+                    toadd = new residentialzone();
+                    break;
+                case 'C': // commercial
+                    toadd = new commercialzone();
+                    break;
+                default:
+                    break;
+                }
+
+                row.push_back(toadd);
+            }
+            regionMap.push_back(row);
+        }
+    }
+    else
+    {
+        cout << "Error opening region file" << endl;
+    }
+    file.close();
+
+    // Link all nodes
+    for (int x = 0; x < regionMap.size(); x++)
+    {
+        for (int y = 0; y < regionMap[x].size(); y++)
+        {
             zonenode *current = regionMap[x][y];
+            current->setID(x * 100 + y);
 
-            //Link north
-            if(x - 1 >= 0) {
+            // Link north
+            if (x - 1 >= 0)
+            {
                 current->setNeighbor(0, regionMap[x - 1][y]);
 
-                //Link north west
-                if(y - 1 >= 0)
+                // Link north west
+                if (y - 1 >= 0)
                     current->setNeighbor(4, regionMap[x - 1][y - 1]);
 
-                //Link north east
-                if(y + 1 <= regionMap[x].size() - 1)
+                // Link north east
+                if (y + 1 <= regionMap[x].size() - 1)
                     current->setNeighbor(5, regionMap[x - 1][y + 1]);
             }
 
-            //Link south
-            if(x + 1 <= regionMap.size() - 1) {
+            // Link south
+            if (x + 1 <= regionMap.size() - 1)
+            {
                 current->setNeighbor(1, regionMap[x + 1][y]);
 
-                //Link south west
-                if(y - 1 >= 0)
+                // Link south west
+                if (y - 1 >= 0)
                     current->setNeighbor(6, regionMap[x + 1][y - 1]);
 
-                //Link south east
-                if(y + 1 <= regionMap[x].size() - 1)
+                // Link south east
+                if (y + 1 <= regionMap[x].size() - 1)
                     current->setNeighbor(7, regionMap[x + 1][y + 1]);
             }
 
-            //Link west
-            if(y - 1 >= 0)
+            // Link west
+            if (y - 1 >= 0)
                 current->setNeighbor(2, regionMap[x][y - 1]);
 
-            //Link east
-            if(y + 1 <= regionMap[x].size() - 1)
+            // Link east
+            if (y + 1 <= regionMap[x].size() - 1)
                 current->setNeighbor(3, regionMap[x][y + 1]);
         }
     }
-
-    //do simulation
+    // do simulation
     for (int a = 0; a < MAX_TIME_STEPS; a++)
     {
         cout << "----------Step " << a << "----------" << endl;
@@ -381,14 +325,13 @@ int main()
 
         if (a % REFRESH_RATE == 0)
         {
-            //Output entire city
+            // Output entire city
             analyze(0, 0, regionMap[0].size(), regionMap.size());
 
-            //Custom analyze
+            // Custom analyze
             customanalyze();
         }
     }
-
 
     return 0;
 }
