@@ -16,6 +16,7 @@ vector<vector<zonenode *>> regionMap;
 int population = 0, pollution = 0;
 int MAX_TIME_STEPS, REFRESH_RATE;
 
+//General output
 void analyze(int a, int A, int b, int B)
 {
     if (a <= regionMap[0].size() && a >= 0 && A <= regionMap.size() && A >= 0 && b <= regionMap[0].size() && b >= 0 && B <= regionMap.size() && B >= 0)
@@ -55,6 +56,7 @@ void analyze(int a, int A, int b, int B)
     }
 }
 
+//Function to allow custom analyzing of a specific region
 void customanalyze()
 {
     char choice;
